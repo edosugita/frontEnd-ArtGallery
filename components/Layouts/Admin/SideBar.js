@@ -23,8 +23,8 @@ export default function SideBar() {
             <div className="side-nav">
                 <div className="side-nav-inner">
                     <ul className="side-nav-menu scrollable">
-                        <li className={`nav-item dropdown ${isActiveDropDown('seller/dashboard')}`}>
-                            <Link className="dropdown-toggle" href="javascript:void(0);">
+                        <li className={`nav-item dropdown ${isActiveDropDown('admin/dashboard')}`}>
+                            <Link className="dropdown-toggle" href="#">
                                 <span className="icon-holder">
                                     <i className="anticon anticon-dashboard"></i>
                                 </span>
@@ -34,13 +34,13 @@ export default function SideBar() {
                                 </span>
                             </Link>
                             <ul className="dropdown-menu">
-                                <li className={isActiveLink('seller/dashboard')}>
-                                    <Link href="/seller/dashboard">Home</Link>
+                                <li className={isActiveLink('admin/dashboard')}>
+                                    <Link href="/admin/dashboard">Home</Link>
                                 </li>
                             </ul>
                         </li>
                         <li className={`nav-item dropdown ${isActiveDropDown('sell-item/product')} ${isActiveDropDown('sell-item/auction')} ${isActiveDropDown('sell-item/discount')}`}>
-                            <Link className="dropdown-toggle" href="javascript:void(0);">
+                            <Link className="dropdown-toggle" href="#">
                                 <span className="icon-holder">
                                     <i className="anticon anticon-tags"></i>
                                 </span>
@@ -51,18 +51,18 @@ export default function SideBar() {
                             </Link>
                             <ul className="dropdown-menu">
                                 <li className={isActiveLink('sell-item/product')}>
-                                    <Link href="/seller/sell-item/product">Products</Link>
+                                    <Link href="/admin/sell-item/product">Products</Link>
                                 </li>
                                 <li className={isActiveLink('sell-item/auction')}>
-                                    <Link href="/seller/sell-item/auction">Items for Auction</Link>
+                                    <Link href="/admin/sell-item/auction">Items for Auction</Link>
                                 </li>
                                 <li className={isActiveLink('sell-item/discount')}>
-                                    <Link href="/seller/sell-item/discount">Products with a Discount</Link>
+                                    <Link href="/admin/sell-item/discount">Products with a Discount</Link>
                                 </li>
                             </ul>
                         </li>
                         <li className={`nav-item dropdown ${isActiveDropDown('data/product')} ${isActiveDropDown('data/auction')} ${isActiveDropDown('data/discount')}`}>
-                            <Link className="dropdown-toggle" href="javascript:void(0);">
+                            <Link className="dropdown-toggle" href="#">
                                 <span className="icon-holder">
 									<i className="anticon anticon-hdd"></i>
 								</span>

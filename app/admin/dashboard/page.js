@@ -1,8 +1,8 @@
-import LayoutsSeller from "@/components/Layouts/Seller/Layouts";
+import LayoutsAdmin from "@/components/Layouts/Admin/Layouts";
 
 export default function Dashboard() {
     return (
-        <LayoutsSeller>
+        <LayoutsAdmin>
             <>
                 <div className="row">
                     <div className="col-md-6 col-lg-3">
@@ -75,6 +75,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </>
-        </LayoutsSeller>
+        </LayoutsAdmin>
     )
 }

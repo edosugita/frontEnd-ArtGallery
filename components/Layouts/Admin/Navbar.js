@@ -1,3 +1,5 @@
+'use client'
+import Logout from "@/config/logout";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,7 +8,7 @@ export default function Navbar() {
         <>
             <div className="header">
                 <div className="logo logo-dark flex justify-center">
-                    <Link href="index.html">
+                    <Link href="/admin/dashboard">
                         <Image
                             src="/assets/images/logo/logo.png"
                             width={130}
@@ -89,7 +91,7 @@ export default function Navbar() {
                                         <i className="anticon font-size-10 anticon-right"></i>
                                     </div>
                                 </Link>
-                                <Link href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
+                                <div className="dropdown-item d-block p-h-15 p-v-10 cursor-pointer" onClick={() => Logout()}>
                                     <div className="d-flex align-items-center justify-content-between">
                                         <div>
                                             <i className="anticon opacity-04 font-size-16 anticon-logout"></i>
@@ -97,7 +99,7 @@ export default function Navbar() {
                                         </div>
                                         <i className="anticon font-size-10 anticon-right"></i>
                                     </div>
-                                </Link>
+                                </div>
                             </div>
                         </li>
                     </ul>

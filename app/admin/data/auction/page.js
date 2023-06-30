@@ -1,9 +1,9 @@
-import LayoutsSeller from '@/components/Layouts/Seller/Layouts'
+import LayoutsAdmin from '@/components/Layouts/Admin/Layouts'
 import React from 'react'
 
 export default function AddProductAuction() {
     return (
-        <LayoutsSeller>
+        <LayoutsAdmin>
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -17,6 +17,6 @@ export default function AddProductAuction() {
                     </div>
                 </div>
             </div>
-        </LayoutsSeller>
+        </LayoutsAdmin>
     )
 }

@@ -3,7 +3,7 @@ import '@/app/globals.css'
 import '@/public/assets/css/app.min.css'
 import Script from 'next/script'
 
-export default function LayoutsSellerAuth({ children }) {
+export default function LayoutsAdminAuth({ children }) {
     return (
         <html lang="en">
             <body>

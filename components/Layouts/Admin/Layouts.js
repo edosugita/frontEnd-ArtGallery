@@ -7,7 +7,7 @@ import Script from 'next/script'
 import SideBar from './SideBar'
 import Footer from './Footer'
 
-export default function LayoutsSeller({ children }) {
+export default function LayoutsAdmin({ children }) {
     
     return (
         <html lang="en">

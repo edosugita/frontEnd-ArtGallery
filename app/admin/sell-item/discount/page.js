@@ -1,13 +1,13 @@
-import LayoutsSeller from '@/components/Layouts/Seller/Layouts'
+import LayoutsAdmin from '@/components/Layouts/Admin/Layouts'
 import React from 'react'
 
-export default function AddProductAuction() {
+export default function AddProductDiscount() {
     return (
-        <LayoutsSeller>
+        <LayoutsAdmin>
             <div className="card">
                 <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center">
-                        <h5>Add Product For Auction</h5>
+                        <h5>Add Product For Discount</h5>
                     </div>
                     <hr />
                     <div className="m-t-10">
@@ -17,6 +17,6 @@ export default function AddProductAuction() {
                     </div>
                 </div>
             </div>
-        </LayoutsSeller>
+        </LayoutsAdmin>
     )
 }

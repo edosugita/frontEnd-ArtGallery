@@ -1,5 +1,5 @@
 'use client'
-import LayoutsSellerAuth from '@/components/Layouts/Seller/LayoutsAuth'
+import LayoutsAdminAuth from '@/components/Layouts/Admin/LayoutsAuth'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -56,7 +56,7 @@ export default function Register() {
                     timer: 2000,
                     timerProgressBar: true,
                     willClose: () => {
-                        router.push('/seller/auth/login')
+                        router.push('/admin/auth/login')
                     }
                 })
             }
@@ -75,7 +75,7 @@ export default function Register() {
     }
 
     return (
-        <LayoutsSellerAuth>
+        <LayoutsAdminAuth>
             <div className="col-lg-8 bg-white">
                 <div className="container h-100">
                     <div className="row no-gutters h-100 align-items-center">
@@ -88,7 +88,7 @@ export default function Register() {
                             </div>
                             <p className="m-b-30">Create your account to get access</p>
                             {isError && (
-                                <div class="alert alert-danger bg-red-100 border-2 border-red-200">
+                                <div className="alert alert-danger bg-red-100 border-2 border-red-200">
                                     {isError}
                                 </div>
                             )}
@@ -157,6 +157,6 @@ export default function Register() {
                     </div>  
                 </div>
             </div>
-        </LayoutsSellerAuth>
+        </LayoutsAdminAuth>
     )
 }
