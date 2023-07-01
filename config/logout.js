@@ -2,6 +2,7 @@
 import axios from "axios";
 import headers from "./headers";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export default async function Logout() {
     const url = process.env.NEXT_PUBLIC_API_URL
@@ -22,6 +23,7 @@ export default async function Logout() {
                 timer: 2000,
                 timerProgressBar: true,
                 willClose: () => {
+                    Cookies.remove('token')
                     window.location.href = "/"
                 }
             })

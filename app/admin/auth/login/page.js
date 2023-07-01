@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import headers from '@/config/headers'
 import Swal from 'sweetalert2'
+import Cookies from 'js-cookie'
 
 export default function Register() {
     const [email, setEmail] = useState('')
@@ -22,8 +23,6 @@ export default function Register() {
         const url = process.env.NEXT_PUBLIC_API_URL
         
         try {
-            // await axios.get(`${url}/sanctum/csrf-cookie`);
-
             const response = await axios.post(`${url}/user/login`,{
                 email,
                 password,
@@ -33,9 +32,7 @@ export default function Register() {
             })
 
             const responseData = response.data
-
-            console.log(responseData)
-
+            
             if (responseData.status == 200) {
                 Swal.fire({
                     title: 'Login Success',
@@ -44,6 +41,7 @@ export default function Register() {
                     timer: 2000,
                     timerProgressBar: true,
                     willClose: () => {
+                        Cookies.set('token', responseData.data.token, { expires: 60 })
                         router.push('/admin/dashboard')
                     }
                 })
