@@ -1,13 +1,25 @@
 import { NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
 
 export function middleware(request) {
     const userToken = request.cookies.get('token')?.value
     const path = request.nextUrl.pathname
 
     const url = process.env.NEXT_PUBLIC_APP_URL
-    const decodeToken = userToken ? jwt.decode(userToken) : null
-    const status = decodeToken?.status
+    
+    const decodeJwt = (token) => {
+        const [headerB64, payloadB64, signatureB64] = token.split('.');
+        const payload = JSON.parse(atob(payloadB64));
+        return payload;
+    };
+
+    let decodedToken;
+    try {
+        if (userToken) {
+        decodedToken = decodeJwt(userToken);
+        }
+    } catch (error) {
+        console.log('Error decoding JWT:', error.message);
+    }
 
     if (!userToken) {
         if (path === '/admin/auth/login' || path === '/admin/auth/register') {
@@ -16,6 +28,8 @@ export function middleware(request) {
             return NextResponse.redirect(`${url}/admin/auth/login`)
         }
     }
+
+    const status = decodedToken?.status
 
     if (status === 1) {
         if (path.startsWith('/admin') && !path.startsWith('/admin/auth/login') && !path.startsWith('/admin/auth/register')) {
