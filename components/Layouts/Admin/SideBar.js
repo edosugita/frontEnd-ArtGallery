@@ -9,8 +9,6 @@ export default function SideBar() {
     const auctionHalfSegment = segments[segments.length - 2]
     const auctionLastSegment = segments[segments.length - 1]
 
-    console.log(auctionHalfSegment + '/' + auctionLastSegment)
-
     const isActiveLink = (href) => {
         return auctionHalfSegment + '/' + auctionLastSegment === href ? 'active' : ''
     }
@@ -39,25 +37,25 @@ export default function SideBar() {
                                 </li>
                             </ul>
                         </li>
-                        <li className={`nav-item dropdown ${isActiveDropDown('sell-item/product')} ${isActiveDropDown('sell-item/auction')} ${isActiveDropDown('sell-item/discount')}`}>
+                        <li className={`nav-item dropdown ${isActiveDropDown('product/product')} ${isActiveDropDown('product/auction')} ${isActiveDropDown('product/discount')}`}>
                             <Link className="dropdown-toggle" href="#">
                                 <span className="icon-holder">
                                     <i className="anticon anticon-tags"></i>
                                 </span>
-                                <span className="title">Sell Item</span>
+                                <span className="title">Product</span>
                                 <span className="arrow">
                                     <i className="arrow-icon"></i>
                                 </span>
                             </Link>
                             <ul className="dropdown-menu">
-                                <li className={isActiveLink('sell-item/product')}>
-                                    <Link href="/admin/sell-item/product">Products</Link>
+                                <li className={isActiveLink('product/sell')}>
+                                    <Link href="/admin/product/sell">Products for Sale</Link>
                                 </li>
-                                <li className={isActiveLink('sell-item/auction')}>
-                                    <Link href="/admin/sell-item/auction">Items for Auction</Link>
+                                <li className={isActiveLink('product/auction')}>
+                                    <Link href="/admin/product/auction">Items for Auction</Link>
                                 </li>
-                                <li className={isActiveLink('sell-item/discount')}>
-                                    <Link href="/admin/sell-item/discount">Products with a Discount</Link>
+                                <li className={isActiveLink('product/discount')}>
+                                    <Link href="/admin/product/discount">Products with a Discount</Link>
                                 </li>
                             </ul>
                         </li>
@@ -66,7 +64,7 @@ export default function SideBar() {
                                 <span className="icon-holder">
 									<i className="anticon anticon-hdd"></i>
 								</span>
-                                <span className="title">View Product</span>
+                                <span className="title">Notification</span>
                                 <span className="arrow">
 									<i className="arrow-icon"></i>
 								</span>

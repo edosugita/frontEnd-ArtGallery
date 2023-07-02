@@ -2,8 +2,16 @@
 import Logout from "@/config/logout";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import Token from "@/config/userToken";
 
 export default function Navbar() {
+    const [user, setUser] = useState([])
+
+    useEffect(() => {
+        setUser(Token())
+    }, [])
+
     return (
         <>
             <div className="header">
@@ -43,12 +51,12 @@ export default function Navbar() {
                 <div className="nav-wrap">
                     <ul className="nav-left">
                         <li className="desktop-toggle">
-                            <Link href="javascript:void(0);">
+                            <Link href="#">
                                 <i className="anticon"></i>
                             </Link>
                         </li>
                         <li className="mobile-toggle">
-                            <Link href="javascript:void(0);">
+                            <Link href="#">
                                 <i className="anticon"></i>
                             </Link>
                         </li>
@@ -77,20 +85,11 @@ export default function Navbar() {
                                             />
                                         </div>
                                         <div className="m-l-10">
-                                            <p className="m-b-0 text-dark font-weight-semibold">Marshall Nichols</p>
-                                            <p className="m-b-0 opacity-07">UI/UX Desinger</p>
+                                            <p className="m-b-0 text-dark font-weight-semibold">{user.name}</p>
+                                            <p className="m-b-0 opacity-07">{user.status === 2 ? 'Admin' : 'User'}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <Link href="javascript:void(0);" className="dropdown-item d-block p-h-15 p-v-10">
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div>
-                                            <i className="anticon opacity-04 font-size-16 anticon-user"></i>
-                                            <span className="m-l-10">Edit Profile</span>
-                                        </div>
-                                        <i className="anticon font-size-10 anticon-right"></i>
-                                    </div>
-                                </Link>
                                 <div className="dropdown-item d-block p-h-15 p-v-10 cursor-pointer" onClick={() => Logout()}>
                                     <div className="d-flex align-items-center justify-content-between">
                                         <div>
