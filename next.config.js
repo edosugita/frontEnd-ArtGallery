@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['link.storjshare.io'],
+        domains: [
+            'link.storjshare.io',
+            'app.sandbox.midtrans.com'
+        ],
     },
 }
 

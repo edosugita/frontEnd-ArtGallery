@@ -7,9 +7,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import numeral from 'numeral'
 import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 
 export default function Product() {
     const [dataProduct, setDataProduct] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     const router = useRouter()
 
@@ -20,7 +22,8 @@ export default function Product() {
 
             try {
                 const response = await axios.get(`${url}/product/sell/get`, {headers: headers})
-                setDataProduct(response.data.data)
+                const dataArray = Object.values(response.data.data);
+                setDataProduct(dataArray)
             } catch (error) {
                 console.error(error)
             }
@@ -29,7 +32,43 @@ export default function Product() {
         getData()
     }, [])
 
-    console.log(dataProduct)
+    const handleDelete = (data) => {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        console.log(data)
+
+        Swal.fire({
+            title: 'Are you sure?',
+            html: `Are you sure you want to delete this data <b>${data.artname}</b>?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+            }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    setIsLoading(true)
+
+                    const uuid = data.uuid_art
+                    const response = await axios.post(`${url}/product/sell/delete/${uuid}`,{
+                        
+                    }, {
+                        headers: headers,
+                        withCredentials: true
+                    })
+
+                    const updatedDataProduct = dataProduct.filter(item => item.uuid_art !== uuid)
+                    setDataProduct(updatedDataProduct)
+                    
+                    Swal.fire('Deleted!', 'Your data has been deleted.', 'success')
+                } catch (error) {
+                     Swal.fire('Error!', 'An error occurred while deleting the data.', 'error')
+                } finally {
+                    setIsLoading(false);
+                }
+            }
+        })
+    }
 
     return (
         <LayoutsAdmin>
@@ -52,6 +91,7 @@ export default function Product() {
                                         <th>Price</th>
                                         <th>Status</th>
                                         <th>Activate Image</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,6 +120,11 @@ export default function Product() {
                                                     Active
                                                     <i class="anticon anticon-compass"></i>
                                                 </Link>
+                                            </td>
+                                            <td>
+                                                <button className="btn btn-error" onClick={() => handleDelete(item)} >
+                                                    <i className="anticon anticon-delete"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
