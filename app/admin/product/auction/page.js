@@ -21,7 +21,7 @@ export default function ProductAuction() {
         const getData = async () => {
             try {
                 const response = await axios.get(`${url}/product/auction/get`, {headers: headers})
-                const dataArray = Object.values(response.data.data);
+                const dataArray = Object.values(response.data.data)
                 setDataProduct(dataArray)
             } catch (error) {
                 console.error(error)

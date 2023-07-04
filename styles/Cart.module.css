@@ -1,0 +1,29 @@
+.checkout {
+    background: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    box-shadow: 0px -4px 20px rgba(255, 255, 255, 0.12);
+    border-radius: 12px 12px 0px 0px;
+    padding: 40px 20px;
+}
+
+.btn {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+}
+
+.h5 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: 0.04em;
+    color: #EBEBEB;
+}
+
+.h5>span {
+    color: #E30813;
+}

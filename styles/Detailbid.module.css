@@ -1,0 +1,213 @@
+.section {
+    margin-top: 50px;
+}
+
+.h4_title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px !important;
+}
+
+.section_btn {
+    background: #2E2E2E;
+    border-radius: 6px;
+    padding: 5px 10px;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.section_btn:hover {
+    background-color: rgb(53, 53, 53);
+}
+
+.section_img {
+    height: 100%;
+}
+
+.section_img>img {
+    width: 100%;
+    height: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.information {
+    margin-top: 20px;
+}
+
+.information>.by {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #858585;
+    text-transform: capitalize;
+}
+
+.information>.by>.name {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #EBEBEB;
+    text-transform: capitalize;
+}
+
+.information>h5 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px !important;
+    line-height: 130%;
+    letter-spacing: 0.04em;
+    color: #EBEBEB;
+}
+
+.information>.desc {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #858585;
+}
+
+.box {
+    background: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.box>p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 130%;
+    color: #858585;
+}
+
+.box>h5 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px !important;
+    line-height: 130%;
+    letter-spacing: 0.04em;
+    color: #EBEBEB;
+}
+
+.btnbuy {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    padding: 10px 0;
+}
+
+.btnshop {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #FFFFFF;
+    padding: 10px 0;
+}
+
+/* .table {
+    width: 100%;
+    display: block;
+    white-space: nowrap;
+    overflow: scroll;
+    height: 200px;
+} */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .section {
+        margin-top: 60px;
+    }
+
+    .h4_title {
+        font-size: 18px;
+    }
+
+    .section_btn {
+        border-radius: 12px;
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .section {
+        margin-top: 70px;
+    }
+
+    .h4_title {
+        font-size: 18px;
+    }
+
+    .section_btn {
+        border-radius: 12px;
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+
+    .box>p {
+        font-size: 10px;
+    }
+
+    .box>h5 {
+        font-size: 12px !important;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .section {
+        margin-top: 80px;
+    }
+
+    .h4_title {
+        font-size: 28px !important;
+    }
+
+    .section_btn {
+        border-radius: 12px;
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+
+    .information>.by,
+    .information>.by>.name {
+        font-size: 12px;
+    }
+
+    .information>h5 {
+        font-size: 24px !important;
+    }
+
+    .information>.desc {
+        font-size: 12px;
+    }
+
+    .information {
+        margin-top: 0px !important;
+    }
+
+    .box>p {
+        font-size: 10px;
+    }
+
+    .box>h5 {
+        font-size: 12px !important;
+    }
+}

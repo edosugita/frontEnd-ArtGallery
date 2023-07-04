@@ -1,0 +1,219 @@
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .row {
+        flex-direction: column-reverse;
+    }
+
+    .iframe {
+        display: block;
+        width: 100%;
+        border: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .jumbotron>p>span {
+        font-style: normal;
+        color: #858585 !important;
+    }
+
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .row {
+        flex-direction: unset;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .row {
+        flex-direction: unset;
+    }
+
+    .iframe {
+        display: block;
+        width: 100%;
+        border: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .jumbotron>p>span {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 10px;
+        color: #858585 !important;
+    }
+}
+
+.jumbotron2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 80px;
+
+    position: absolute;
+    width: 1384px;
+    height: 374px;
+    left: 220px;
+    top: 1294px;
+}
+
+.btn {
+    width: 183px;
+    height: 47px;
+    background: #E30813;
+}
+
+.btn:hover {
+    background-color: #a2050c;
+}
+
+/* Carousel Event */
+.section_two {
+    margin-top: 50px;
+}
+
+.h4_title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px !important;
+}
+
+.card {
+    background: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 4px;
+    overflow: hidden;
+
+}
+
+.card>img {
+    width: auto;
+    height: 100%;
+}
+
+.card_body {
+    padding: 15px;
+}
+
+.card_body>h5 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.card_body>p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    color: #FFFFFF;
+    text-transform: capitalize;
+}
+
+.card_text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px !important;
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+.card_body>p>span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    color: #858585 !important;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .section_two {
+        margin-top: 60px;
+    }
+
+    .h4_title {
+        font-size: 18px;
+    }
+
+    .card_body {
+        padding: 18px;
+    }
+
+    .card_body>h5 {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .card_body>p>span,
+    .card_body>p {
+        font-size: 10px;
+    }
+
+    .card_text {
+        font-size: 14px !important;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .section_two {
+        margin-top: 70px;
+    }
+
+    .h4_title {
+        font-size: 18px;
+    }
+
+    .card_body {
+        padding: 18px;
+    }
+
+    .card_body>h5 {
+        font-size: 14px;
+        margin-bottom: 5px;
+    }
+
+    .card_body>p>span,
+    .card_body>p {
+        font-size: 10px;
+    }
+
+    .card_text {
+        font-size: 14px !important;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .section_two {
+        margin-top: 80px;
+    }
+
+    .h4_title {
+        font-size: 28px !important;
+    }
+
+
+    .card_body {
+        padding: 20px;
+    }
+
+    .card_body>h5 {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .card_body>p>span,
+    .card_body>p {
+        font-size: 12px;
+    }
+
+    .card_text {
+        font-size: 16px !important;
+    }
+}

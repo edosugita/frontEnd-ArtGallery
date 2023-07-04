@@ -1,0 +1,101 @@
+.circle {
+    background-color: #1A1A1A;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    padding: 5px;
+    font-size: 13px;
+}
+
+.bg_dark {
+    background-color: #141414 !important;
+    border-bottom: 1px solid #2E2E2E;
+}
+
+.nav_link {
+    display: block;
+    padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x) !important;
+    color: var(--bs-nav-link-color);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    color: #EBEBEB;
+    text-decoration: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out;
+}
+
+ .search {
+     position: relative;
+ }
+
+ .search input {
+    border: 1px solid #2E2E2E;
+    padding:10px 40px 10px 20px;
+    background: #141414;
+    border-radius: 12px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+ }
+
+
+ .search input:focus {
+    outline: none;
+    background: #141414;
+    border: 1px solid #2E2E2E;
+    color: #FFFFFF;
+ }
+
+ .search .icon_search {
+     position: absolute;
+     top: 12px;
+     right: 16px;
+ }
+
+ .search input::placeholder {
+    color: #858585;
+ }
+ 
+ .navbar {
+    margin-top: 20px !important;
+ }
+
+ .image_profile img {
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+}
+
+ /* Small devices (landscape phones, 576px and up) */
+ @media (min-width: 576px) {
+    .navbar {
+        margin-top: 20px !important;
+    }
+
+    .nav_link {
+        padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x) !important;
+    }
+ }
+
+ /* Medium devices (tablets, 768px and up) */
+ @media (min-width: 768px) {
+    .navbar {
+        margin-top: 0 !important;
+    }
+
+    .nav_link {
+        padding: var(--bs-nav-link-padding-y) 8px !important;
+    }
+ }
+
+ /* Large devices (desktops, 992px and up) */
+ @media (min-width: 992px) {
+    .navbar {
+        margin-top: 0 !important;
+    }
+
+    .nav_link {
+        padding: var(--bs-nav-link-padding-y) 15px !important;
+    }
+ }

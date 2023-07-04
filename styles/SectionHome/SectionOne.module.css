@@ -1,0 +1,167 @@
+.section_one {
+    background: #1A1A1A;
+    border: 1px solid #2E2E2E;
+    border-radius: 12px;
+    color: #FFFFFF;
+}
+
+.section_one_img>img {
+    width: 100%;
+    height: auto;
+}
+
+.h1 {
+    font-style: normal;
+    font-weight: 600;
+}
+
+.span {
+    color: #858585 !important;
+    font-style: normal;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Batasi menjadi dua baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.h2 {
+    font-style: normal;
+    font-weight: 400;
+}
+
+.link_detail {
+    text-decoration: none;
+    color: #FFFFFF;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.btn {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.section_one {
+    padding: 20px 20px 60px 20px;
+}
+
+.span {
+    font-size: 10px;
+}
+
+.h1,
+.h2 {
+    font-size: 16px;
+}
+
+.btn {
+    padding: 5px 12px;
+}
+
+.btn,
+.link_detail {
+    text-align: center;
+    font-size: 10px;
+}
+
+.row {
+    flex-direction: column-reverse;
+    gap: 20px;
+}
+
+.button_group {
+    align-items: center;
+    justify-content: center !important;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .section_one {
+        padding: 40px 40px 60px 40px;
+    }
+
+    .span {
+        font-size: 10px;
+    }
+
+    .h1, .h2 {
+        font-size: 18px;
+    }
+
+    .btn {
+        padding: 5px 12px;
+    }
+
+    .btn, .link_detail {
+        text-align: center;
+        font-size: 10px;
+    }
+
+    .row {
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+
+    .button_group {
+        align-items: center;
+        justify-content: center !important;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .section_one {
+        padding: 60px 60px 10px 60px;
+    }
+
+    .span {
+        font-size: 11px;
+    }
+
+    .h1, .h2 {
+        font-size: 19px;
+    }
+
+    .btn {
+        padding: 10px 17px;
+    }
+
+    .btn, .link_detail {
+        font-size: 11px;
+    }
+
+    .row {
+        align-items: center;
+        flex-direction: unset;
+        gap: 0;
+    }
+
+    .button_group {
+        align-items: center;
+        justify-content: unset !important;
+    }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .section_one {
+        padding: 80px 80px 10px 80px;
+    }
+
+    .span {
+        font-size: 18px;
+    }
+
+    .h1, .h2 {
+        font-size: 38px;
+    }
+
+    .btn, .link_detail {
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,92 @@
+.h6_title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #EBEBEB;
+    margin-bottom: 15px;
+}
+
+.price_title>h6,
+.time_title>h6,
+.auction_title>h6,
+.category_title>h6 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 130%;
+    color: #2E2E2E;
+    text-transform: uppercase;
+}
+
+.price_title,
+.time_title,
+.auction_title,
+.category_title {
+    margin-bottom: 15px;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .h6_title {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .price_title>h6,
+    .time_title>h6,
+    .auction_title>h6,
+    .category_title>h6 {
+        font-size: 12px !important;
+    }
+
+    .price_title,
+    .time_title,
+    .auction_title,
+    .category_title {
+        margin-bottom: 15px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .h6_title {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+
+    .price_title>h6,
+    .time_title>h6,
+    .auction_title>h6,
+    .category_title>h6 {
+        font-size: 12px !important;
+    }
+    
+    .price_title,
+    .time_title,
+    .auction_title,
+    .category_title {
+        margin-bottom: 15px;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .h6_title {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .price_title>h6,
+    .time_title>h6,
+    .auction_title>h6,
+    .category_title>h6 {
+        font-size: 12px;
+    }
+    
+    .price_title,
+    .time_title,
+    .auction_title,
+    .category_title {
+        margin-bottom: 15px;
+    }
+}

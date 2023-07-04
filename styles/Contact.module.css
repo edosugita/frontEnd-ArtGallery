@@ -1,0 +1,56 @@
+.contact {
+    margin: auto;
+    width: auto;
+}
+
+.form_control label {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 130%;
+    letter-spacing: 0.03em;
+    color: #858585;
+    margin-bottom: 20px;
+}
+
+.form_control {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #FFFFFF;
+    background-color: #141414;
+    background-clip: padding-box;
+    border: 1px solid #2E2E2E;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 12px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.form_control:focus {
+    outline: none;
+}
+
+.form_control::placeholder {
+    color: #858585;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .contact {
+        margin: auto;
+        width: 520px;
+    }
+}

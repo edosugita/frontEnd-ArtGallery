@@ -1,0 +1,23 @@
+.row {
+    flex-direction: column-reverse;
+}
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .row {
+        flex-direction: column-reverse;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .row {
+        flex-direction: unset;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .row {
+        flex-direction: unset;
+    }
+}
