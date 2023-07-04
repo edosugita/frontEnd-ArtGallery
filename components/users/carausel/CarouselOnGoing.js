@@ -108,7 +108,7 @@ export default class CarouselOnGoing extends Component {
 
 
                         return (
-                            <div key={item.index}>
+                            <div key={index}>
                                 <div className='me-2 ms-2'>
                                     <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
                                         <div className={style.card}>
