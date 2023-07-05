@@ -1,8 +1,7 @@
 import style from '@/styles/Modal.module.css'
 import Swal from "sweetalert2";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { getCsrfToken } from 'next-auth/react'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { validatePassword, validateCpassword, validateUsername, validateEmail, validatePhone } from "@/components/validation/validation";
@@ -99,7 +98,7 @@ export default function Register() {
                             {errorMessage && <>
                                 <div className="alert alert-danger text-center" role="alert">{errorMessage}</div>
                             </>}
-                            <input name="getCsrfToken" type="hidden" defaultValue={getCsrfToken()} />
+                            
                                 <label htmlFor="name" className="form-label">NAME</label>
                                 <input type="text" className={style.form_control} name='name' id="name" placeholder="type your name here ..." value={name} onChange={(event) => setName(event.target.value)} required />
                             </div>

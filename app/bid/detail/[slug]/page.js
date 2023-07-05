@@ -30,8 +30,8 @@ export default function BidDetail({params}) {
                     withCredentials: true
                 })
                 const data = response.data.data
-                setData(data)
                 setIsLoading(false)
+                setData(data)
             } catch (error) {
                 console.log(error)
             }

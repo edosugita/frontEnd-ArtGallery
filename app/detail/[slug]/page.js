@@ -27,8 +27,8 @@ export default function Detail({ params }) {
                     withCredentials: true
                 })
                 const data = response.data.data
-                setData(data)
                 setIsLoading(false)
+                setData(data)
             } catch (error) {
                 console.log(error)
             }
@@ -36,9 +36,6 @@ export default function Detail({ params }) {
         setUser(userToken !== undefined ? Token() : null)
         fetchData()
     }, [userToken, params, data])
-
-    console.log(data)
-
 
     return (
         <>
