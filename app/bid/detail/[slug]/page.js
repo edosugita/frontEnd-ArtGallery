@@ -31,11 +31,11 @@ export default function BidDetail({params}) {
                 })
                 const data = response.data.data
                 setData(data)
+                setIsLoading(false)
             } catch (error) {
                 console.log(error)
             }
         }
-        setIsLoading(false)
         setUser(userToken !== undefined ? Token() : null)
         fetchData()
     }, [params, userToken, data])
