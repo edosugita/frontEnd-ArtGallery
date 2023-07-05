@@ -27,8 +27,8 @@ export default function Detail({ params }) {
                     withCredentials: true
                 })
                 const data = response.data.data
-                setIsLoading(false)
                 setData(data)
+                setIsLoading(false)
             } catch (error) {
                 console.log(error)
             }
