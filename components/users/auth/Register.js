@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { validatePassword, validateCpassword, validateUsername, validateEmail, validatePhone } from "@/components/validation/validation"
+import axios from 'axios'
+import headers from '@/config/headers'
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false)
@@ -12,7 +14,7 @@ export default function Register() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [cpassword, setCpassword] = useState('')
+    const [password_confirmation, setCpassword] = useState('')
     const [phone, setPhone] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
 
@@ -23,7 +25,7 @@ export default function Register() {
     const [isErrorPassword, setIsErrorPassword] = useState('')
     const [isErrorCPassword, setIsErrorCPassword] = useState('')
     const [isError, setIsError] = useState('')
-    
+
     const router = useRouter()
 
     const status = 1
@@ -32,7 +34,7 @@ export default function Register() {
     const { emailIsValid, emailErrors } = validateEmail(email)
     const { phoneIsValid, phoneErrors } = validatePhone(phone)
     const { passwordIsValid, passwordErrors } = validatePassword(password)
-    const { cpasswordIsValid, cpasswordErrors } = validateCpassword(password, cpassword)
+    const { cpasswordIsValid, cpasswordErrors } = validateCpassword(password, password_confirmation)
 
     const handleTogglePassword = () => {
         setShowPassword(!showPassword)
@@ -42,7 +44,7 @@ export default function Register() {
         event.preventDefault()
 
         try {
-            if (password !== cpassword) {
+            if (password !== password_confirmation) {
                 setErrorMessage("Password not matched!")
             } else if (name === '') {
                 setErrorMessage('Name cannot be empty')
@@ -76,13 +78,17 @@ export default function Register() {
 
                     if (responseData.status == 201) {
                         Swal.fire({
-                            title: 'Success Register',
-                            text: responseData.message,
-                            icon: 'success',
-                            timer: 2000,
+                            title: 'Success',
+                            text: 'Registration successful!',
+                            icon: "success",
+                            timer: 1000,
+                            background: '#141414',
+                            color: '#FFFFFF',
                             timerProgressBar: true,
+                            showConfirmButton: false,
+                            progressStepsColor: '#E30813',
                             willClose: () => {
-                                router.push('/admin/auth/login')
+                                router.push('/')
                             }
                         })
                     }
@@ -155,7 +161,7 @@ export default function Register() {
                             <div className={`modal-body ${style.modal_body}`}>
                                 <label htmlFor="cpassword" className="form-label">RE-WRITE PASSWORD</label>
                                 <div className={style.passw}>
-                                    <input type={showPassword ? 'text' : 'password'} className={style.form_control} name='cpassword' id="cpassword" placeholder="**********" value={cpassword} onChange={(event) => setCpassword(event.target.value)} required />
+                                    <input type={showPassword ? 'text' : 'password'} className={style.form_control} name='cpassword' id="cpassword" placeholder="**********" value={password_confirmation} onChange={(event) => setCpassword(event.target.value)} required />
                                     <FontAwesomeIcon onClick={handleTogglePassword} className={style.icon_passw} icon={showPassword ? faEyeSlash : faEye} color='grey' />
                                 </div>
                                 <div id="cpassword" className="form-text">

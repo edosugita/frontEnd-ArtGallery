@@ -44,29 +44,31 @@ export default function Login() {
             console.log(responseData)
             
             if (responseData.status == 200) {
-                Swal.fire({
-                    title: 'Login successful!',
-                    text: 'Welcome to ArtGallery',
-                    icon: "success",
-                    timer: 1000,
-                    background: '#141414',
-                    color: '#FFFFFF',
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    progressStepsColor: '#E30813',
-                    willClose: () => {
-                        Cookies.set('token', responseData.data.token, { expires: 60 })
-                        router.replace(process.env.NEXT_PUBLIC_APP_URL + pathname)
-                    }
-                })
+                if (responseData.data.status === 2) {
+                    setErrorMessage('Email is not registered or email and password are incorrect.')
+                } else {
+                    Swal.fire({
+                        title: 'Login successful!',
+                        text: 'Welcome to ArtGallery',
+                        icon: "success",
+                        timer: 1000,
+                        background: '#141414',
+                        color: '#FFFFFF',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        progressStepsColor: '#E30813',
+                        willClose: () => {
+                            Cookies.set('token', responseData.data.token, { expires: 60 })
+                            router.replace(process.env.NEXT_PUBLIC_APP_URL + pathname)
+                        }
+                    })
+                }
             }
             
         } catch (error) {
             setIsErrorEmail(error.response?.data?.errors?.email || null)
             setIsErrorPassword(error.response?.data?.errors?.password || null)
-            setIsError(error.response?.data?.message || null)
-
-            console.error(error)
+            setErrorMessage(error.response?.data?.message || null)
         }
     }
 

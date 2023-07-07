@@ -23,7 +23,8 @@ export default function Navbar() {
 
     const router = usePathname()
 
-    
+    console.log(user)
+
     useEffect(() => {
         setUser(userToken !== undefined ? Token() : null)
     }, [userToken])
@@ -108,9 +109,15 @@ export default function Navbar() {
                                     <div className={style.circle}>
                                         {user !== null && user.status == 1 ? (
                                             <>
-                                                {/* <div className={style.image_profile}>
-                                                    <Image src={`/images/avatar/${user.user.user.avatar}`} alt='Image Slider' width="250" height="250" />
-                                                </div> */}
+                                                {user.picture == 'user.png' ? (
+                                                    <div className={style.image_profile}>
+                                                        <Image src={`/images/avatar/avatar.jpg`} alt='Image Slider' width="250" height="250" />
+                                                    </div>
+                                                ) : (
+                                                    <div className={style.image_profile}>
+                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt='Image Slider' width="250" height="250" />
+                                                    </div>
+                                                )}
                                             </>
                                         ) : (
                                         <FontAwesomeIcon icon={faUser} />

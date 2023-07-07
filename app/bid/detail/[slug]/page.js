@@ -9,6 +9,7 @@ import axios from 'axios'
 import headers from '@/config/headers'
 import Cookies from 'js-cookie'
 import LayoutsUser from '@/components/Layouts/User/Layouts'
+import Token from '@/config/userToken'
 
 export default function BidDetail({params}) {
     const [data, setData] = useState(null)
@@ -165,7 +166,7 @@ export default function BidDetail({params}) {
                                                 </>
                                             ) : (
                                                 <>
-                                                    {!user && user.status !== 1 ? (
+                                                    {!user && user?.status === 1 ? (
                                                     <div className={style.buy_button}>
                                                         <div className="row mt-3">
                                                             <div className="col-12">

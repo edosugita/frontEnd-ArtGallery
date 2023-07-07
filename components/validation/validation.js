@@ -65,7 +65,7 @@ export const validateUsername = (username) => {
     } else if (username.length < 3) {
         usernameIsValid = false;
         usernameErrors.push("Username must be at least 3 characters long");
-    }  else if (username.length > 6) {
+    }  else if (username.length > 12) {
         usernameIsValid = false;
         usernameErrors.push("Username must be at most 6 characters long");
     }

@@ -17,6 +17,7 @@ export default function Detail({ params }) {
     const [data, setData] = useState(null)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    
     const userToken = Cookies.get('token')
 
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function Detail({ params }) {
                                                 <p>price</p>
                                                 {data && <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.price)}</h5>}
                                             </div>
-                                            {user && user.status !== 1 ? (
+                                            {user && user?.status !== 1 ? (
                                                 <div className={style.buy_button}>
                                                     <div className="row mt-3">
                                                         <div className="col-7">

@@ -32,18 +32,22 @@ export default function Register() {
 
             const responseData = response.data
             
-            if (responseData.status == 200) {
-                Swal.fire({
-                    title: 'Login Success',
-                    text: responseData.message,
-                    icon: 'success',
-                    timer: 2000,
-                    timerProgressBar: true,
-                    willClose: () => {
-                        Cookies.set('token', responseData.data.token, { expires: 60 })
-                        router.push('/admin/dashboard')
-                    }
-                })
+            if (responseData.status === 200) {
+                if (responseData.data.status === 1) {
+                    setIsError('Email is not registered or email and password are incorrect.')
+                } else {
+                    Swal.fire({
+                        title: 'Login Success',
+                        text: responseData.message,
+                        icon: 'success',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        willClose: () => {
+                            Cookies.set('token', responseData.data.token, { expires: 60 })
+                            router.push('/admin/dashboard')
+                        }
+                    })
+                }
             }
             
         } catch (error) {
