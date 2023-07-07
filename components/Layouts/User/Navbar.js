@@ -13,16 +13,16 @@ import Login from '@/components/users/auth/Login'
 import Register from '@/components/users/auth/Register'
 
 export default function Navbar() {
-    const [user, setUser] = useState([])
-    const [isActive, setIsActive] = useState(false)
-    
+    const [user, setUser] = useState([])    
     const userToken = Cookies.get('token')
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleSearchChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
 
     const router = usePathname()
 
-    const handleActive = () => {
-        setIsActive(!isActive)
-    }
     
     useEffect(() => {
         setUser(userToken !== undefined ? Token() : null)
@@ -38,14 +38,14 @@ export default function Navbar() {
                             width={512}
                             height={512}
                             alt='Logo'
-                            className='w-44'
+                            style={{width: '11rem', height: 'auto'}}
                         />
                     </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className={`navbar-collapse ${style.navbar}`} >
-                        <form className="my-auto w-full" role="search">
+                        <form className="my-auto w-100" role="search">
                             <div className={style.search}>
                             <input type="text" className="form-control" placeholder="Cari karya seni yang anda inginkan di sini ..." />
                             <FontAwesomeIcon className={style.icon_search} icon={faSearch} color='grey' />
@@ -82,7 +82,7 @@ export default function Navbar() {
                                     ContactUs
                                 </Link>
                             </li>
-                            {user !== null? (
+                            {user !== null && user.status == 1 ? (
                                 <>
                                 <li className="nav-item">
                                     <Link className={`${style.nav_link} ${router === '/notification' ? 'active' : ''}`} href="/notification">
@@ -106,7 +106,7 @@ export default function Navbar() {
                             <li className="nav-item dropdown d-flex align-items-center flex-column">
                                 <Link href={'/'} className={`${style.nav_link} dropdown-toggle`} role="button" data-bs-toggle="dropdown">
                                     <div className={style.circle}>
-                                        {user !== null ? (
+                                        {user !== null && user.status == 1 ? (
                                             <>
                                                 {/* <div className={style.image_profile}>
                                                     <Image src={`/images/avatar/${user.user.user.avatar}`} alt='Image Slider' width="250" height="250" />
@@ -118,10 +118,10 @@ export default function Navbar() {
                                     </div>
                                 </Link>
                                 <ul className="dropdown-menu dropdown-menu-end">
-                                    {user === null ? (
+                                    {user === null || user.status !== 1 ? (
                                     <>
                                         <li>
-                                            <Link href='#' className="dropdown-item" onClick={()=>window.my_modal_5.showModal()}>Login</Link>
+                                            <Link href='#' className="dropdown-item" data-bs-toggle="modal" data-bs-target="#Login">Login</Link>
                                         </li>
                                         <li>
                                             <Link href='#' className="dropdown-item" data-bs-toggle="modal" data-bs-target="#Register">Register</Link>

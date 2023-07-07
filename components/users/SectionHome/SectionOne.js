@@ -34,18 +34,20 @@ export default function SectionOne() {
     return (
         <>
             {isLoading ? (
-                <section className={`${style.section_one} flex justify-center items-center`}>
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <section className={`${style.section_one} d-flex justify-content-center align-items-center`}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </section>
             ) : (
                 <section className={style.section_one}>
                     <div
                         id="carouselExampleCaptions"
-                        className="carousel slide row flex-col-reverse"
+                        className="carousel slide row flex-column-reverse"
                         data-bs-ride="carousel"
                     >
                         <div className="col-12">
-                            <div className="carousel-indicators mt-10">
+                            <div className="carousel-indicators" style={{marginTop: '2.5rem'}}>
                                 {data.map((_, index) => (
                                     <button
                                         key={index}
@@ -71,7 +73,7 @@ export default function SectionOne() {
                                                 <h1 className={`mb-3 ${style.h1}`}>{item.artname}</h1>
                                                 <span className={style.span}>{item.description}</span>
                                                 <h2 className={`mt-3 ${style.h2}`}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</h2>
-                                                <div className={`flex justify-start gap-4 mt-3 ${style.button_group}`}>
+                                                <div className={`d-flex justify-content-start gap-4 mt-3 ${style.button_group}`}>
                                                     <input
                                                         className={`btn btn-danger rounded-top-3 ${style.btn}`}
                                                         type="button"

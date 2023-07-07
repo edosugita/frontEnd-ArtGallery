@@ -10,13 +10,13 @@ import Footer from './Footer'
 import { useEffect } from 'react'
 
 export default function LayoutsUser({ children }) {
-    useEffect(() => {
-        typeof document !== undefined ? require('bootstrap/dist/js/bootstrap') : null
-    }, [])
+     useEffect(() => {
+        require ('bootstrap/dist/js/bootstrap.js')
+    }, []);
     
     return (
         <html lang="en">
-            <body className='bg-background text-white'>
+            <body className='bg-background text-white' style={{backgroundColor: '#141414'}}>
                 <header>
                     <Navbars />
                 </header>

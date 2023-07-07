@@ -38,8 +38,10 @@ export default function SectionTwo() {
     return (
         <>
             {isLoading ? (
-                <div className={`${style.section_two} flex justify-center items-center`}>
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <div className={`${style.section_two} d-flex justify-content-center align-items-center`}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             ) : (
                 <section className={style.section_two}>
@@ -54,17 +56,17 @@ export default function SectionTwo() {
                         </div>
 
                         {data.map((item) => (
-                            <div className='col-md-4 col-sm-6 col-12 mb-3 h-full' key={item.uuid_art}>
+                            <div className='col-md-4 col-sm-6 col-12 mb-3 h-100' key={item.uuid_art}>
                                 <Link className="text-decoration-none text-light" href={`/detail/${item.slug}`}>
                                     <div className={style.card}>
                                         <div style={{height: '300px', width: '100%', overflow: "hidden"}}>
                                             <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
                                         </div>
                                         <div className={style.card_body}>
-                                            <h5 className='h-16'>{item.artname}</h5>
+                                            <h5 style={{height:'4rem'}}>{item.artname}</h5>
                                             <div className="mb-3 mt-2">
                                                 {item.kategori.split(",").map((kategori) => (
-                                                    <span key={kategori} className="badge me-2 mb-1 uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                    <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
                                                 ))}
                                             </div>
                                             <p><span>By</span> {item.artist}</p>

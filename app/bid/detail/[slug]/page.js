@@ -66,7 +66,7 @@ export default function BidDetail({params}) {
             setTimeString(timeString += seconds + "s")
 
             if (timeDiff <= 0) {
-                setTimeStringtimeString = "End"
+                setTimeString(timeString = "End")
             }
         }
     }, [data])
@@ -74,8 +74,10 @@ export default function BidDetail({params}) {
     return (
         <>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen bg-background">
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             ) : (
                 <LayoutsUser>
@@ -163,7 +165,7 @@ export default function BidDetail({params}) {
                                                 </>
                                             ) : (
                                                 <>
-                                                    {user !== null ? (
+                                                    {!user && user.status !== 1 ? (
                                                     <div className={style.buy_button}>
                                                         <div className="row mt-3">
                                                             <div className="col-12">

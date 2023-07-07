@@ -51,8 +51,10 @@ export default function Auction() {
     return (
         <LayoutsUser>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen">
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             ) : (
                 <div className="container p-5">
@@ -67,10 +69,10 @@ export default function Auction() {
                                                     <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
                                                 </div>
                                                 <div className={styles.card_body}>
-                                                    <h5 className='h-20'>{item.artname}</h5>
-                                                    <div className="mb-3 mt-2 h-16">
+                                                    <h5 style={{height: '5rem'}}>{item.artname}</h5>
+                                                    <div className="mb-3 mt-2" style={{height: '4rem'}}>
                                                         {item.kategori.split(",").map((kategori) => (
-                                                            <span key={kategori} className="badge me-2 mb-1 uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                            <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
                                                         ))}
                                                     </div>
                                                     <p><span>By</span> {item.artist}</p>

@@ -16,7 +16,6 @@ export default function Register() {
     const [isError, setIsError] = useState('')
 
     const router = useRouter()
-    
 
     const handleSignIn = async (event) => {
         event.preventDefault()

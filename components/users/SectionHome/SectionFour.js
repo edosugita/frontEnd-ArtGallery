@@ -39,8 +39,10 @@ export default function SectionFour() {
     return (
         <>
             {isLoading ? (
-                <div className={`${style.section_four} flex justify-center items-center`}>
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <div className={`${style.section_four} d-flex justify-content-center align-items-center`}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             ) : (
                 <section className={style.section_four}>
@@ -62,10 +64,10 @@ export default function SectionFour() {
                                             <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
                                         </div>
                                         <div className={style.card_body}>
-                                            <h5 className='h-16'>{item.artname}</h5>
+                                            <h5 style={{height:'4rem'}}>{item.artname}</h5>
                                             <div className="mb-3 mt-2">
                                                 {item.kategori.split(",").map((kategori) => (
-                                                    <span key={kategori} className="badge me-2 mb-1 uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                    <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
                                                 ))}
                                             </div>
                                             <p><span>By</span> {item.artist}</p>

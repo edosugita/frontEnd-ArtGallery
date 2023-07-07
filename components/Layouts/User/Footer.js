@@ -1,20 +1,21 @@
+import style from '@/styles/Footer.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
 export default function Footer() {
   return (
     <>
-        <div className='border-t-[1px] bg-background border-background-primary p-5'>
+        <div className={style.footer}>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-6 col-12'>
-                        <div className="flex justify-start">
+                        <div className="d-flex justify-content-start">
                             <div className="row">
                                 <div className="col-12">
-                                    <h1 className="text-4xl tracking-wide text-[#EBEBEB] mb-5 font-semibold">23 Art Galery</h1>
+                                    <h1 className={style.title}>23 Art Galery</h1>
                                 </div>
                                 <div className="col-12">
-                                    <p className="text-xs text-[#858585] mb-10 font-normal">23artgalery@email.com</p>
+                                    <p className={style.mail}>23artgalery@email.com</p>
                                 </div>
                             </div>
                         </div>
@@ -22,51 +23,51 @@ export default function Footer() {
                     <div className='col-md-6 col-12'>
                         <div className="row">
                             <div className="col-md-4 col-sm-6 col-12 mb-3">
-                                <h6 className={`mb-3 font-bold text-xs tracking-[0.03em] text-[#7A7A7A]`}>Fitur</h6>
+                                <h6 className={`mb-3 ${style.link_title}`}>Fitur</h6>
                                 <div className="col-12 mb-3">
-                                    <Link href='#' className="font-normal text-xs tracking-[0.03em] text-[#7A7A7A] hover:text-red-primary delay-150 no-underline">
+                                    <Link href='#' className={style.link}>
                                         Galery
                                     </Link>
                                 </div>
                                 <div className="col-12 mb-3">
-                                    <Link href='#' className="font-normal text-xs tracking-[0.03em] text-[#7A7A7A] hover:text-red-primary delay-150 no-underline">
+                                    <Link href='#' className={style.link}>
                                         Auction
                                     </Link>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12 mb-3">
-                                <h6 className={`mb-3 font-bold text-xs tracking-[0.03em] text-[#7A7A7A]`}>Service</h6>
+                                <h6 className={`mb-3 ${style.link_title}`}>Service</h6>
                                 <div className="col-12 mb-3">
-                                    <Link href='#' className="font-normal text-xs tracking-[0.03em] text-[#7A7A7A] hover:text-red-primary delay-150 no-underline">
+                                    <Link href='#' className={style.link}>
                                         Contact Us
                                     </Link>
                                 </div>
                                 <div className="col-12 mb-3">
-                                    <Link href='#' className="font-normal text-xs tracking-[0.03em] text-[#7A7A7A] hover:text-red-primary delay-150 no-underline">
+                                    <Link href='#' className={style.link}>
                                         FAQ
                                     </Link>
                                 </div>
                                 <div className="col-12 mb-3">
-                                    <Link href='#' className="font-normal text-xs tracking-[0.03em] text-[#7A7A7A] hover:text-red-primary delay-150 no-underline">
+                                    <Link href='#' className={style.link}>
                                         Kebijakan & Syarat Ketentuan
                                     </Link>
                                 </div>
                             </div>
                             <div className="col-md-4 col-sm-6 col-12 mb-3">
-                                <h6 className={`mb-3 font-bold text-xs tracking-[0.03em] text-[#7A7A7A]`}>Sosial Media</h6>
-                                <div className={`row`}>
+                                <h6 className={`mb-3 ${style.link_title}`}>Sosial Media</h6>
+                                <div className={`row ${style.sosmed}`}>
                                     <div className="col-3 mb-3">
-                                        <Link href='#'>
+                                        <Link href='#' className={style.link_sosmed}>
                                             <Image src={'/svg/Instagram.svg'} alt="Sosial Media Instagram" width={20} height={20} />
                                         </Link>
                                     </div>
                                     <div className="col-3 mb-3">
-                                        <Link href='#'>
+                                        <Link href='#' className={style.link_sosmed}>
                                             <Image src={'/svg/Facebook.svg'} alt="Sosial Media Instagram" width={20} height={20} />
                                         </Link>
                                     </div>
                                     <div className="col-3 mb-3">
-                                        <Link href='#'>
+                                        <Link href='#' className={style.link_sosmed}>
                                             <Image src={'/svg/Twitter.svg'} alt="Sosial Media Instagram" width={20} height={20} />
                                         </Link>
                                     </div>

@@ -8,10 +8,10 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import LayoutsUser from '@/components/Layouts/User/Layouts'
-import Token from '@/config/userToken'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import headers from '@/config/headers'
+import Token from '@/config/userToken'
 
 export default function Detail({ params }) {
     const [data, setData] = useState(null)
@@ -40,8 +40,10 @@ export default function Detail({ params }) {
     return (
         <>
             {isLoading ? (
-                <div className="flex justify-center items-center h-screen bg-background">
-                    <span className="loading loading-dots loading-lg text-red-primary"></span>
+                <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
                 </div>
             ) : (
                 <LayoutsUser>
@@ -71,7 +73,7 @@ export default function Detail({ params }) {
                                                 <p>price</p>
                                                 {data && <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.price)}</h5>}
                                             </div>
-                                            {user ? (
+                                            {user && user.status !== 1 ? (
                                                 <div className={style.buy_button}>
                                                     <div className="row mt-3">
                                                         <div className="col-7">

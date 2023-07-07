@@ -1,10 +1,10 @@
 import style from '@/styles/Modal.module.css'
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { validatePassword, validateCpassword, validateUsername, validateEmail, validatePhone } from "@/components/validation/validation";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { validatePassword, validateCpassword, validateUsername, validateEmail, validatePhone } from "@/components/validation/validation"
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false)
@@ -15,7 +15,18 @@ export default function Register() {
     const [cpassword, setCpassword] = useState('')
     const [phone, setPhone] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
+
+    const [isErrorName, setIsErrorName] = useState('')
+    const [isErrorUsername, setIsErrorUsername] = useState('')
+    const [isErrorEmail, setIsErrorEmail] = useState('')
+    const [isErrorPhone, setIsErrorPhone] = useState('')
+    const [isErrorPassword, setIsErrorPassword] = useState('')
+    const [isErrorCPassword, setIsErrorCPassword] = useState('')
+    const [isError, setIsError] = useState('')
+    
     const router = useRouter()
+
+    const status = 1
 
     const { usernameIsValid, usernameErrors } = validateUsername(username)
     const { emailIsValid, emailErrors } = validateEmail(email)
@@ -46,41 +57,50 @@ export default function Register() {
             } else if (phoneErrors.length > 0 || phone === '') {
                 setErrorMessage('Phone number not valid')
             } else {
-                const response = await fetch('api/users/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
+                const url = process.env.NEXT_PUBLIC_API_URL
+        
+                try {
+                    const response = await axios.post(`${url}/user/create`,{
                         name,
                         username,
                         email,
+                        phone,
                         password,
-                        phone
+                        password_confirmation,
+                        status
+                    }, {
+                        headers: headers,
                     })
-                })
 
-                if (response.error) {
-                    setErrorMessage("Invalid data");
-                } else {
-                    await Swal.fire({
-                        title: 'Success',
-                        text: 'Registration successful!',
-                        icon: "success",
-                        timer: 1000,
-                        background: '#141414',
-                        color: '#FFFFFF',
-                        timerProgressBar: true,
-                        showConfirmButton: false,
-                        progressStepsColor: '#E30813',
-                        willClose(popup) {
-                            router.reload()
-                        },
-                    })
+                    const responseData = response.data
+
+                    if (responseData.status == 201) {
+                        Swal.fire({
+                            title: 'Success Register',
+                            text: responseData.message,
+                            icon: 'success',
+                            timer: 2000,
+                            timerProgressBar: true,
+                            willClose: () => {
+                                router.push('/admin/auth/login')
+                            }
+                        })
+                    }
+                    
+                } catch (error) {
+                    setIsErrorName(error.response?.data?.errors?.name || null);
+                    setIsErrorUsername(error.response?.data?.errors?.username || null)
+                    setIsErrorEmail(error.response?.data?.errors?.email || null)
+                    setIsErrorPhone(error.response?.data?.errors?.phone || null)
+                    setIsErrorPassword(error.response?.data?.errors?.password || null)
+                    setIsErrorCPassword(error.response?.data?.errors?.password_confirmation || null)
+                    setIsError(error.response?.data?.message || null)
+
+                    console.error(error)
                 }
             }
         } catch (error) {
-            setErrorMessage("Something went wrong");
+            setErrorMessage("Something went wrong")
         }
     }
 
