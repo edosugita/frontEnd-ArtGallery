@@ -11,6 +11,7 @@ import Cookies from "js-cookie"
 import { usePathname } from 'next/navigation'
 import Login from '@/components/users/auth/Login'
 import Register from '@/components/users/auth/Register'
+import Logout from '@/config/logout'
 
 export default function Navbar() {
     const [user, setUser] = useState([])    
@@ -22,8 +23,6 @@ export default function Navbar() {
     };
 
     const router = usePathname()
-
-    console.log(user)
 
     useEffect(() => {
         setUser(userToken !== undefined ? Token() : null)
@@ -86,14 +85,14 @@ export default function Navbar() {
                             {user !== null && user.status == 1 ? (
                                 <>
                                 <li className="nav-item">
-                                    <Link className={`${style.nav_link} ${router === '/notification' ? 'active' : ''}`} href="/notification">
+                                    <Link className={`${style.nav_link} ${router === 'user/notification' ? 'active' : ''}`} href="user/notification">
                                         <div className={style.circle}>
                                             <FontAwesomeIcon icon={faBell} />
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className={`${style.nav_link} ${router === '/cart' ? 'active' : ''}`} href="/cart">
+                                    <Link className={`${style.nav_link} ${router === 'user/cart' ? 'active' : ''}`} href="user/cart">
                                         <div className={style.circle}>
                                             <FontAwesomeIcon icon={faCartShopping} />
                                         </div>
@@ -115,7 +114,7 @@ export default function Navbar() {
                                                     </div>
                                                 ) : (
                                                     <div className={style.image_profile}>
-                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt='Image Slider' width="250" height="250" />
+                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${user.picture}`} alt='Image Slider' width="250" height="250" />
                                                     </div>
                                                 )}
                                             </>
@@ -137,17 +136,22 @@ export default function Navbar() {
                                     ) : (
                                         <>
                                             <li>
-                                                <Link href="/profile" className={`dropdown-item ${router === '/profile' ? 'active' : ''}`}>
+                                                <Link href="user/profile" className={`dropdown-item ${router === 'user/profile' ? 'active' : ''}`}>
                                                     Profile
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link href="/collections" className={`dropdown-item ${router === '/collections' ? 'active' : ''}`}>
+                                                <Link href="/user/collections" className={`dropdown-item ${router === '/user/collections' ? 'active' : ''}`}>
                                                     My Collections
                                                 </Link>
                                             </li>
+                                            <li>
+                                                <Link href="/user/transaction" className={`dropdown-item ${router === '/user/transaction' ? 'active' : ''}`}>
+                                                    Transaction
+                                                </Link>
+                                            </li>
                                             <li><hr className="dropdown-divider"/></li>
-                                            <li><Link href='#' className="dropdown-item" >Logout</Link></li>
+                                            <li><Link href='#' onClick={() => Logout()} className="dropdown-item" >Logout</Link></li>
                                         </>
                                     )}
                                 </ul>

@@ -1,5 +1,6 @@
+'use client'
 import style from '@/styles/Modal.module.css'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 

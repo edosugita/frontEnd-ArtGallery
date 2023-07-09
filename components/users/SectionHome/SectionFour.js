@@ -40,8 +40,8 @@ export default function SectionFour() {
         <>
             {isLoading ? (
                 <div className={`${style.section_four} d-flex justify-content-center align-items-center`}>
-                    <div class="spinner-grow text-danger" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-grow text-danger" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : (

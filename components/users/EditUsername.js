@@ -1,48 +1,41 @@
+'use client'
+
 import style from '@/styles/Modal.module.css'
 import {useState, useEffect} from "react"
 import {validateUsername} from "@/components/validation/validation"
-import {getCsrfToken, getSession} from "next-auth/react"
-import {setMessage} from "@/components/Message/messageSlice"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import Swal from "sweetalert2"
+import Cookies from 'js-cookie'
+import Token from '@/config/userToken'
 
 export default function EditUsername() {
-    const [session, setSesion] = useState(null)
     const [data, setData] = useState(null)
     const [username, setUsername] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const { usernameIsValid, usernameErrors } = validateUsername(username)
+    const [user, setUser] = useState([])
+    const userToken = Cookies.get('token')
     const router = useRouter()
 
     useEffect(() => {
-        async function fetchSession () {
-            try {
-                const session = await getSession()
-                setSesion(session)
-            } catch (e) {
-                console.log(e)
-            }
-        }
+        setUser(userToken !== undefined ? Token() : null)
+    }, [userToken, user])
 
-        fetchSession()
-    }, [session])
 
-    const uuid = session?.user?.user.uuid_user
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         try {
+    //             const response = await fetch(`api/users/${uuid}`)
+    //             const data = await response.json()
+    //             setData(data.user.username)
+    //             setUsername(data.user.username)
+    //         } catch (e) {
+    //             console.log(e)
+    //         }
+    //     }
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(`api/users/${uuid}`)
-                const data = await response.json()
-                setData(data.user.username)
-                setUsername(data.user.username)
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        fetchData()
-    }, [uuid, data])
+    //     fetchData()
+    // }, [uuid, data])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -75,7 +68,7 @@ export default function EditUsername() {
                         showConfirmButton: false,
                         progressStepsColor: '#E30813',
                         willClose(popup) {
-                            router.reload()
+                            router.refresh()
                         },
                     })
                 }
@@ -99,7 +92,6 @@ export default function EditUsername() {
                                 {errorMessage && <>
                                     <div className="alert alert-danger text-center" role="alert">{errorMessage}</div>
                                 </>}
-                                <input name="getCsrfToken" type="hidden" defaultValue={getCsrfToken()} />
                                 <label htmlFor="username" className="form-label">NEW USERNAME</label>
                                 <input type="text" className={style.form_control} name='username' id="username" placeholder="CreativeMuse" value={username} onChange={(event) => setUsername(event.target.value)} required />
                                 <div id="surname" className="form-text">
