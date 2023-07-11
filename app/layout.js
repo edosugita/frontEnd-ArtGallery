@@ -10,9 +10,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>{children}</body>
-      <Script
-          src="https://app.sandbox.midtrans.com/snap/snap.js"
-          data-client-key="SB-Mid-client-XravRxhAaythPuaC" />
     </html>
   )
 }

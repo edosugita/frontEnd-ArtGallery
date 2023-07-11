@@ -18,7 +18,6 @@ import Swal from 'sweetalert2'
 export default function Detail({ params }) {
     const [data, setData] = useState(null)
     const [user, setUser] = useState([])
-    const [dataUuid, setDataUuid] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
     
@@ -83,29 +82,29 @@ export default function Detail({ params }) {
             headers: headers,
             withCredentials: true
         })
-        
-        setDataUuid(uuid_art)
 
         snap.pay(response.data.data.tokenPayment, {
             onSuccess: function (result) {
                 alert('Payment success!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onPending: function (result) {
                 alert('Waiting for payment!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onError: function (result) {
                 alert('Payment failed!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onClose: function () {
                 alert('You closed the popup without finishing the payment')
             }
         })
+
+        postData()
     }
 
-    const postData = async(payment) => {
+    const postData = async(payment, dataUuid) => {
         if (payment) {
             const url = process.env.NEXT_PUBLIC_API_URL
             const uuid = user.uuid
