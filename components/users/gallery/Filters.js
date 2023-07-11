@@ -1,120 +1,196 @@
-import style from '@/styles/Filter.module.css'
-import { useRouter } from 'next/navigation'
+import headers from '@/config/headers';
+import style from '@/styles/Filter.module.css';
+import axios from 'axios';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 
-export default function Filters() {
-  const router = useRouter()
+export default function Filters({ onSubmit }) {
+  const [sortOrder, setSortOrder] = useState('asc');
+  const [sortType, setSortType] = useState('price');
+  const [categories, setCategories] = useState([]);
+  const [labelFilters, setLabelFilters] = useState([]);
 
-  console.log(router.pathname)
+  const handleSortOrderChange = (e) => {
+    setSortOrder(e.target.value);
+  };
 
-  const condition = router.pathname !== '/collections'
+  const handleSortTypeChange = (e) => {
+    setSortType(e.target.value);
+  };
+
+  const handleCategoryChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setCategories((prevCategories) => [...prevCategories, value]);
+    } else {
+      setCategories((prevCategories) =>
+        prevCategories.filter((category) => category !== value)
+      );
+    }
+  };
+
+  const handleLabelFilterChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setLabelFilters((prevLabelFilters) => [...prevLabelFilters, value]);
+    } else {
+      setLabelFilters((prevLabelFilters) =>
+        prevLabelFilters.filter((label) => label !== value)
+      );
+    }
+  };
+
+  const handleFilterSubmit = (e) => {
+    e.preventDefault();
+
+    const filterData = {
+      sort_order: sortOrder,
+      sort_type: sortType,
+      categories: categories,
+      label_filters: labelFilters,
+      auction_status: labelFilters.includes('on_going') || labelFilters.includes('upcoming'),
+    };
+
+    onSubmit(filterData);
+  };
+
+  const pathname = usePathname()
+
   return (
     <>
-        <form>
-            <h6 className={style.h6_title}>Sort</h6>
-            <div className={style.time_title}>
-                {router.pathname !== '/collections' &&
-                    <div className={style.price_title}>
-                        <h6>price</h6>
-                        <div className={`${style.form_check} d-flex justify-content-between`}>
-                            <label className="form-check-label" htmlFor="price1">
-                                Terendah ke Tertinggi
-                            </label>
-                            <input className="form-check-input" type="radio" name="price" id="price1" />
-                        </div>
-                        <div className={`${style.form_check} d-flex justify-content-between`}>
-                            <label className="form-check-label" htmlFor="price2">
-                                Tertinggi ke Terendah
-                            </label>
-                            <input className="form-check-input" type="radio" name="price" id="price2" />
-                        </div>
-                    </div>
-                }
-                
-            
-                <h6>time</h6>
+      <form onSubmit={handleFilterSubmit}>
+        <h6 className={style.h6_title}>Sort</h6>
+        <div className={style.time_title}>
+          <div className={style.price_title}>
+            <h6>price</h6>
+            <div className={`${style.form_check} d-flex justify-content-between`}>
+              <label className="form-check-label" htmlFor="price1">
+                Terendah ke Tertinggi
+              </label>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="price"
+                id="price1"
+                value="asc"
+                onChange={handleSortOrderChange}
+                checked={sortOrder === 'asc'}
+              />
+            </div>
+            <div className={`${style.form_check} d-flex justify-content-between`}>
+              <label className="form-check-label" htmlFor="price2">
+                Tertinggi ke Terendah
+              </label>
+              <input
+                className="form-check-input"
+                type="radio"
+                name="price"
+                id="price2"
+                value="desc"
+                onChange={handleSortOrderChange}
+                checked={sortOrder === 'desc'}
+              />
+            </div>
+          </div>
+
+          <h6>time</h6>
+          <div className={`${style.form_check} d-flex justify-content-between`}>
+            <label className="form-check-label" htmlFor="time1">
+              Terbaru
+            </label>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="time"
+              id="time1"
+              value="created_at"
+              onChange={handleSortTypeChange}
+              checked={sortType === 'created_at'}
+            />
+          </div>
+          <div className={`${style.form_check} d-flex justify-content-between`}>
+            <label className="form-check-label" htmlFor="time2">
+              Terlama
+            </label>
+            <input
+              className="form-check-input"
+              type="radio"
+              name="time"
+              id="time2"
+              value="oldest"
+              onChange={handleSortTypeChange}
+              checked={sortType === 'oldest'}
+            />
+          </div>
+        </div>
+
+        <h6 className={style.h6_title}>Filter</h6>
+        {pathname === '/auction' ? (
+            <div className={style.auction_title}>
+                <h6>auction</h6>
                 <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="time1">
-                        Terbaru
+                    <label className="form-check-label" htmlFor="ongoing1">
+                    On Going
                     </label>
-                    <input className="form-check-input" type="radio" name="time" id="time1" />
+                    <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="on_going"
+                    id="ongoing1"
+                    onChange={handleLabelFilterChange}
+                    checked={labelFilters.includes('on_going')}
+                    />
                 </div>
                 <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="time2">
-                        Terlama
+                    <label className="form-check-label" htmlFor="upcoming1">
+                    Upcoming
                     </label>
-                    <input className="form-check-input" type="radio" name="time" id="time2" />
+                    <input
+                    className="form-check-input"
+                    type="checkbox"
+                    value="upcoming"
+                    id="upcoming1"
+                    onChange={handleLabelFilterChange}
+                    checked={labelFilters.includes('upcoming')}
+                    />
                 </div>
             </div>
-            <h6 className={style.h6_title}>Filter</h6>
-            {router.pathname !== '/collections' &&
-                <div className={style.auction_title}>
-                    <h6>auction</h6>
-                    <div className={`${style.form_check} d-flex justify-content-between`}>
-                        <label className="form-check-label" htmlFor="ongoing1">
-                            On Going
-                        </label>
-                        <input className="form-check-input" type="checkbox" value="" id="ongoing1" />
-                    </div>
-                    <div className={`${style.form_check} d-flex justify-content-between`}>
-                        <label className="form-check-label" htmlFor="upcoming1">
-                            Upcoming
-                        </label>
-                        <input className="form-check-input" type="checkbox" value="" id="upcoming1" />
-                    </div>
-                </div>
-            }
-            <div className={style.category_title}>
-                <h6>category</h6>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="ongoing1">
-                        Abstract
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="ongoing1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="upcoming1">
-                        Realism
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="upcoming1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="ongoing1">
-                        Impressionism
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="ongoing1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="upcoming1">
-                        Expressionism
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="upcoming1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="ongoing1">
-                        Surrealism
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="ongoing1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="upcoming1">
-                        Manga
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="upcoming1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="ongoing1">
-                        Stroke technique
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="ongoing1" />
-                </div>
-                <div className={`${style.form_check} d-flex justify-content-between`}>
-                    <label className="form-check-label" htmlFor="upcoming1">
-                        Collage technique
-                    </label>
-                    <input className="form-check-input" type="checkbox" value="" id="upcoming1" />
-                </div>
-            </div>
-        </form>
+        ) : null}
+
+        <div className={style.category_title}>
+          <h6>category</h6>
+          <div className={`${style.form_check} d-flex justify-content-between`}>
+            <label className="form-check-label" htmlFor="abstrak">
+              Abstrak
+            </label>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value="abstrak"
+              id="abstrak"
+              onChange={handleCategoryChange}
+              checked={categories.includes('abstrak')}
+            />
+          </div>
+          <div className={`${style.form_check} d-flex justify-content-between`}>
+            <label className="form-check-label" htmlFor="dua_dimensi">
+              Dua Dimensi
+            </label>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value="dua_dimensi"
+              id="dua_dimensi"
+              onChange={handleCategoryChange}
+              checked={categories.includes('dua_dimensi')}
+            />
+          </div>
+        </div>
+
+        <button className="btn btn-danger w-100" type="submit">
+          Filter
+        </button>
+      </form>
     </>
-  )
+  );
 }
