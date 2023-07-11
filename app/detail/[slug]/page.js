@@ -12,11 +12,14 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import headers from '@/config/headers'
 import Token from '@/config/userToken'
+import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 export default function Detail({ params }) {
     const [data, setData] = useState(null)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const router = useRouter()
     
     const userToken = Cookies.get('token')
 
@@ -37,6 +40,36 @@ export default function Detail({ params }) {
         setUser(userToken !== undefined ? Token() : null)
         fetchData()
     }, [userToken, params, data])
+
+    const handleAddToCart = async () => {
+        const uuidUser = user.uuid
+        const uuidArt = data.uuid_art
+
+        try {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/cart/add/${uuidUser}/${uuidArt}`, {}, {
+                headers: headers,
+                withCredentials: true
+            })
+            
+            Swal.fire({
+                title: 'Success',
+                text: 'Success add Arts to cart',
+                icon: 'success',
+                timer: 1000,
+                background: '#141414',
+                color: '#FFFFFF',
+                timerProgressBar: true,
+                showConfirmButton: false,
+                progressStepsColor: '#E30813',
+                willClose(popup) {
+                    router.push('/user/cart')
+                }
+            })
+            
+        } catch (error) {
+         console.log(error)
+        }
+    }
 
     return (
         <>
@@ -74,14 +107,14 @@ export default function Detail({ params }) {
                                                 <p>price</p>
                                                 {data && <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.price)}</h5>}
                                             </div>
-                                            {user && user?.status !== 1 ? (
+                                            {user && user?.status === 1 ? (
                                                 <div className={style.buy_button}>
                                                     <div className="row mt-3">
                                                         <div className="col-7">
                                                             <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} />
                                                         </div>
                                                         <div className="col-5">
-                                                            <button className={`btn text-light w-100 ${style.btnshop}`} >
+                                                            <button className={`btn text-light w-100 ${style.btnshop}`} onClick={handleAddToCart}>
                                                                 <FontAwesomeIcon className='me-3' icon={faCartShopping} />
                                                                 Add to Cart
                                                             </button>

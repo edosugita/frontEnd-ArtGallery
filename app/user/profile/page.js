@@ -23,7 +23,7 @@ export default function Profile() {
 
     useEffect(() => {
         setUser(userToken !== undefined ? Token() : null)
-    }, [userToken, user])
+    }, [userToken])
 
     const uuid = user.uuid
 

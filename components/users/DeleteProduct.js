@@ -1,6 +1,8 @@
 'use client'
+import headers from '@/config/headers'
 import style from '@/styles/Modal.module.css'
-import { useRouter } from 'next/navigation';
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -11,41 +13,43 @@ export default function DeleteProduct({ deleteItemData, uuidUser }) {
     const handleDelete = async () => {
         setIsDeleting(true)
         try {
-            const response = await fetch(`http://localhost:3000/api/data/cart/delete?uuidUser=${uuidUser}&uuidArt=${deleteItemData.uuid_art}`, {
-            method: "DELETE"
-            })
+            const url = process.env.NEXT_PUBLIC_API_URL
+            const response = await axios.post(`${url}/cart/delete/${uuidUser}/${deleteItemData.uuid_art}`, {}, {
+                headers: headers,
+                withCredentials: true
+        })
 
-            if (response.ok) {
+        if (response.status === 200) {
                 await Swal.fire({
-                    title: 'Success',
-                    text: 'Data has been deleted!',
-                    icon: "success",
-                    timer: 1000,
-                    background: '#141414',
-                    color: '#FFFFFF',
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    progressStepsColor: '#E30813',
-                    willClose(popup) {
-                        router.reload()
-                    },
-                })
-            } else {
+                title: "Success",
+                text: "Data has been deleted!",
+                icon: "success",
+                timer: 1000,
+                background: "#141414",
+                color: "#FFFFFF",
+                timerProgressBar: true,
+                showConfirmButton: false,
+                progressStepsColor: "#E30813",
+                willClose: () => {
+                    router.refresh()
+                },
+            })
+        } else {
                 await Swal.fire({
-                    title: 'Error',
-                    text: 'Failed to delete data!',
-                    icon: "error",
-                    timer: 1000,
-                    background: '#141414',
-                    color: '#FFFFFF',
-                    timerProgressBar: true,
-                    showConfirmButton: false,   
-                    progressStepsColor: '#E30813',
-                    willClose(popup) {
-                        router.reload()
-                    },
-                })
-            }
+                title: "Error",
+                text: "Failed to delete data!",
+                icon: "error",
+                timer: 1000,
+                background: "#141414",
+                color: "#FFFFFF",
+                timerProgressBar: true,
+                showConfirmButton: false,
+                progressStepsColor: "#E30813",
+                willClose: () => {
+                    router.refresh()
+                },
+            })
+        }
         } catch (error) {
             console.error("An error occurred while deleting data:", error)
         }

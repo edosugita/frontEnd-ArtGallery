@@ -85,7 +85,7 @@ export default function Gallery() {
                                                 <h5 style={{height: '5rem'}}>{item.artname}</h5>
                                                 <div className="mb-3 mt-2" style={{height: '4rem'}}>
                                                     {item.kategori.split(",").map((kategori) => (
-                                                    <span key={kategori} className="badge me-2 mb-1 uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                    <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
                                                     ))}
                                                 </div>
                                                 <p><span>By</span> {item.artist}</p>
