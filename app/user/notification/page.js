@@ -1,30 +1,60 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import DeleteMessage from "@/components/users/DeleteMessage"
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import LayoutsUser from "@/components/Layouts/User/Layouts";
+import { faTrash } from "@fortawesome/free-solid-svg-icons"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import LayoutsUser from "@/components/Layouts/User/Layouts"
+import Cookies from "js-cookie"
+import Token from "@/config/userToken"
+import axios from "axios"
+import headers from "@/config/headers"
 
 export default function Notification() {
-    const [data, setData] = useState([]);
-    const [session, setSession] = useState(null);
-    const [deleteItemData, setDeleteItemData] = useState(null);
+    const [data, setData] = useState([])
+    const [session, setSession] = useState(null)
+    const [deleteItemData, setDeleteItemData] = useState(null)
     const [isDeleting, setIsDeleting] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
+    const [isLoading, setIsLoading] = useState(false)
 
+    const [user, setUser] = useState([])
+    const userToken = Cookies.get('token')
+
+    useEffect(() => {
+        setUser(userToken !== undefined ? Token() : null)
+    }, [userToken])
+
+    const uuid = user.uuid
+
+    useEffect(() => {        
+        const fetchData = async () => {
+            try {
+               const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notification/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+                const dataAll = Object.values(response.data.data)
+                setData(dataAll)
+                setIsLoading(false)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
+        fetchData()
+    }, [uuid])
 
     const handleDelete = async (itemId) => {
       try {
-          setIsDeleting(true);
-          const itemData = data.find((item) => item.id_notification === itemId);
-          const deleteItemDataWithUuidArt = { ...itemData};
-          setDeleteItemData(deleteItemDataWithUuidArt);
+          setIsDeleting(true)
+          const itemData = data.find((item) => item.id_notification === itemId)
+          const deleteItemDataWithUuidArt = { ...itemData}
+          setDeleteItemData(deleteItemDataWithUuidArt)
       } catch (error) {
           console.error(error)
       }
-          setIsDeleting(false);
-    };
+          setIsDeleting(false)
+    }
     return (
         <>
             {isLoading ? (
@@ -37,7 +67,7 @@ export default function Notification() {
                 <LayoutsUser>
                     <div className="container p-5">
                         <h5 className="notif">Notification</h5>
-                        <table className="table">
+                        <table className="table table-dark table-striped">
                             <thead>
                                 <tr>
                                     <th scope="col" width="90%">Pesan</th>
@@ -61,9 +91,9 @@ export default function Notification() {
                             </tbody>
                         </table>
                     </div>
+                    <DeleteMessage deleteItemData={deleteItemData} uuidUser={uuid}  />
                 </LayoutsUser>
-            // <DeleteMessage deleteItemData={deleteItemData} uuidUser={uuidUser}  />
             )}
         </>
-    );
+    )
 }

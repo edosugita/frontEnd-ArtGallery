@@ -1,5 +1,7 @@
+import headers from '@/config/headers';
 import style from '@/styles/Modal.module.css'
-import { useRouter } from 'next/router';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 
@@ -7,17 +9,17 @@ export default function DeleteMessage({ deleteItemData, uuidUser }) {
     const [isDeleting, setIsDeleting] = useState(false)
     const router = useRouter()
 
-    console.log(uuidUser)
-    console.log(deleteItemData)
-
     const handleDelete = async () => {
         setIsDeleting(true)
         try {
-            const response = await fetch(`http://localhost:3000/api/data/notification/delete?uuidUser=${uuidUser}&uuidNotif=${deleteItemData.id_notification}`, {
-            method: "DELETE"
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/notification/delete/${deleteItemData.id}`, {}, {
+                headers: headers,
+                withCredentials: true
             })
 
-            if (response.ok) {
+            console.log(response)
+
+            if (response.status === 200) {
                 await Swal.fire({
                     title: 'Success',
                     text: 'Data has been deleted!',
@@ -29,7 +31,7 @@ export default function DeleteMessage({ deleteItemData, uuidUser }) {
                     showConfirmButton: false,
                     progressStepsColor: '#E30813',
                     willClose(popup) {
-                        router.reload()
+                        router.refresh()
                     },
                 })
             } else {
@@ -44,7 +46,7 @@ export default function DeleteMessage({ deleteItemData, uuidUser }) {
                     showConfirmButton: false,   
                     progressStepsColor: '#E30813',
                     willClose(popup) {
-                        router.reload()
+                        router.refresh()
                     },
                 })
             }

@@ -63,54 +63,62 @@ export default function DetailInformation() {
 
     return (
         <>
-            <LayoutsUser>
-                <div className="container p-5">
-                    <div className="row">
-                        <div className='col-md-7'>
-                            <div className="information">
-                                <div className={style.section_three_img}>
-                                    <div style={{height: '400px', width: '100%', overflow: "hidden"}}>
-                                        {data && (
-                                            <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
-                                        )}
+            {isLoading ? (
+                <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : (
+                <LayoutsUser>
+                    <div className="container p-5">
+                        <div className="row">
+                            <div className='col-md-7'>
+                                <div className="information">
+                                    <div className={style.section_three_img}>
+                                        <div style={{height: '400px', width: '100%', overflow: "hidden"}}>
+                                            {data && (
+                                                <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className={style.section_three_title}>
+                                        {data && <h6>{data.title}</h6>}
+                                    </div>
+                                    <div className={style.section_three_desc}>
+                                        {data && <p>{data.content}</p>}
                                     </div>
                                 </div>
-                                <div className={style.section_three_title}>
-                                    {data && <h6>{data.title}</h6>}
-                                </div>
-                                <div className={style.section_three_desc}>
-                                    {data && <p>{data.content}</p>}
-                                </div>
                             </div>
-                        </div>
-                        <div className='col-md-5'>
-                            <div className={`${style.list_information}`}>
-                                {dataAll.map((item, index) => (
-                                    <Link className="text-decoration-none text-light" href={'/news/detail/' + item.slug} key={index}>
-                                        <div className="row">
-                                            <div className="col-4">
-                                                <div className={style.list_img}>
-                                                    <div style={{height: '75px', width: '100%', overflow: "hidden"}}>
-                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                            <div className='col-md-5'>
+                                <div className={`${style.list_information}`}>
+                                    {dataAll.map((item, index) => (
+                                        <Link className="text-decoration-none text-light" href={'/news/detail/' + item.slug} key={index}>
+                                            <div className="row">
+                                                <div className="col-4">
+                                                    <div className={style.list_img}>
+                                                        <div style={{height: '75px', width: '100%', overflow: "hidden"}}>
+                                                            <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-8 d-grid align-content-between">
+                                                    <div className={`col-12 ${style.list_title}`}>
+                                                        <h6>{item.title}</h6>
+                                                    </div>
+                                                    <div className={`col-12 ${style.list_date}`}>
+                                                        <p>{formatDate(item.created_at)}</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-8 d-grid align-content-between">
-                                                <div className={`col-12 ${style.list_title}`}>
-                                                    <h6>{item.title}</h6>
-                                                </div>
-                                                <div className={`col-12 ${style.list_date}`}>
-                                                    <p>{formatDate(item.created_at)}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                ))}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </LayoutsUser>
+                </LayoutsUser>
+            )}
         </>
     )
 }
