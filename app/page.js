@@ -22,7 +22,7 @@ export default function Home() {
             <div className='container p-5'>
                 <SectionOne />
                 <SectionTwo />
-                {/* <SectionThree /> */}
+                <SectionThree />
                 <SectionFour />
 
                 {/* SECTION SIX 'Images' */}
