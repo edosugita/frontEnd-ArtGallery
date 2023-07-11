@@ -52,7 +52,7 @@ export default function Cart() {
         }
 
         if (uuid) {
-            fetchData();
+            fetchData()
         }
     }, [data, uuid])
     
@@ -145,10 +145,12 @@ export default function Cart() {
                     onSuccess: function (result) {
                         alert('Payment success!')
                         postData(result, uuid_art)
+                        deleteSelectedItems(uuid_art)
                     },
                     onPending: function (result) {
                         alert('Waiting for payment!')
                         postData(result, uuid_art)
+                        deleteSelectedItems(uuid_art)
                     },
                     onError: function (result) {
                         alert('Payment failed!')
@@ -191,6 +193,29 @@ export default function Cart() {
             })
 
             console.log(response)
+        }
+    }
+
+    const deleteSelectedItems = async (uuidArts) => {
+        try {
+            const url = process.env.NEXT_PUBLIC_API_URL
+            const uuid = user.uuid
+            await Promise.all(
+                uuidArts.map(async (uuidArt) => {
+                    const response = await axios.delete(`${url}/cart/delete/${uuid}/${uuidArt}`,
+                    {
+                        headers: headers,
+                        withCredentials: true
+                    }
+                    )
+                        if (response.status === 200) {
+                        console.log(`Item ${uuidArt} deleted successfully`)
+                    }
+                })
+            )
+            fetchData()
+        } catch (error) {
+            console.error("Error deleting selected items:", error)
         }
     }
 
