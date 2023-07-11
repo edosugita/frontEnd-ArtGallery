@@ -59,7 +59,7 @@ export default function SideBar() {
                                 </li>
                             </ul>
                         </li>
-                        <li className={`nav-item dropdown ${isActiveDropDown('data/product')} ${isActiveDropDown('data/auction')} ${isActiveDropDown('data/discount')}`}>
+                        <li className={`nav-item dropdown ${isActiveDropDown('admin/notification')}`}>
                             <Link className="dropdown-toggle" href="#">
                                 <span className="icon-holder">
 									<i className="anticon anticon-hdd"></i>
@@ -70,14 +70,24 @@ export default function SideBar() {
 								</span>
                             </Link>
                             <ul className="dropdown-menu">
-                                <li className={isActiveLink('data/product')}>
-                                    <Link href="avatar.html">Products</Link>
+                                <li className={isActiveLink('admin/notification')}>
+                                    <Link href="/admin/notification">Add</Link>
                                 </li>
-                                <li className={isActiveLink('data/auction')}>
-                                    <Link href="alert.html">Auction Items</Link>
-                                </li>
-                                <li className={isActiveLink('data/discount')}>
-                                    <Link href="badge.html">Discounted Items</Link>
+                            </ul>
+                        </li>
+                        <li className={`nav-item dropdown ${isActiveDropDown('admin/information')} ${isActiveDropDown('information/add')} `}>
+                            <Link className="dropdown-toggle" href="#">
+                                <span className="icon-holder">
+									<i className="anticon anticon-hdd"></i>
+								</span>
+                                <span className="title">Information</span>
+                                <span className="arrow">
+									<i className="arrow-icon"></i>
+								</span>
+                            </Link>
+                            <ul className="dropdown-menu">
+                                <li className={isActiveLink('admin/information')}>
+                                    <Link href="/admin/information">Create</Link>
                                 </li>
                             </ul>
                         </li>
