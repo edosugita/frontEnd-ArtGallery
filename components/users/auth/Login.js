@@ -1,3 +1,5 @@
+'use client'
+
 import style from '@/styles/Modal.module.css'
 import Swal from "sweetalert2"
 import { useState } from 'react'
@@ -22,11 +24,11 @@ export default function Login() {
     const router = useRouter()
 
     const pathname = usePathname()
-
+    
     const handleTogglePassword = () => {
         setShowPassword(!showPassword)
     }
-
+    
     const handleSignIn = async (event) => {
         event.preventDefault()
         const url = process.env.NEXT_PUBLIC_API_URL
@@ -47,6 +49,7 @@ export default function Login() {
                 if (responseData.data.status === 2) {
                     setErrorMessage('Email is not registered or email and password are incorrect.')
                 } else {
+                    Cookies.set('token', responseData.data.token, { expires: 60 })
                     Swal.fire({
                         title: 'Login successful!',
                         text: 'Welcome to ArtGallery',
@@ -58,8 +61,7 @@ export default function Login() {
                         showConfirmButton: false,
                         progressStepsColor: '#E30813',
                         willClose: () => {
-                            Cookies.set('token', responseData.data.token, { expires: 60 })
-                            router.replace(process.env.NEXT_PUBLIC_APP_URL + pathname)
+                            router.push(pathname)
                         }
                     })
                 }

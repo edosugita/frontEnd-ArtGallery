@@ -1,40 +1,63 @@
 'use client'
-'use client'
 
 import Image from "next/image"
 import {useEffect, useState} from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCog } from "@fortawesome/free-solid-svg-icons"
 import EditUsername from "@/components/users/EditUsername"
-// import EditPhone from "@/components/users/EditPhone"
-// import EditEmail from "@/components/users/EditEmail"
-// import EditPassword from "@/components/users/EditPassword"
+import EditPhone from "@/components/users/EditPhone"
+import EditEmail from "@/components/users/EditEmail"
+import EditPassword from "@/components/users/EditPassword"
 import LayoutsUser from "@/components/Layouts/User/Layouts"
 import Link from "next/link"
 import Cookies from "js-cookie"
 import Token from "@/config/userToken"
 import axios from "axios"
+import headers from "@/config/headers"
 
 export default function Profile() {
     const [user, setUser] = useState([])
+    const [data, setData] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
     const userToken = Cookies.get('token')
 
     useEffect(() => {
-        const getUser = async() => {  
-            try {
-                const response = await axios.get()
-            } catch (e) {
-                
-            }
-        }
+        setUser(userToken !== undefined ? Token() : null)
     }, [userToken, user])
 
+    const uuid = user.uuid
+
+    useEffect(() => {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        async function fetchData() {
+            try {
+                const response = await axios.get(`${url}/user/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+
+                const responseData = response.data.data
+                setData(responseData)
+                setIsLoading(false)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
+        fetchData()
+    }, [data, uuid])
 
     return (
         <>
-            <LayoutsUser>
-                <main>
-                    <div className="container p-5" key={user?.uuid}>
+            {isLoading ? (
+                <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
+                    <div class="spinner-grow text-danger" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            ) : (
+                <LayoutsUser>
+                    <div className="container p-5" key={data?.uuid}>
                         <div className="row">
                             <div className="col-md-3 col-12">
                                 <h2>My Account</h2>
@@ -69,7 +92,7 @@ export default function Profile() {
                                                                 <label style={{color: "#858585", fontSize: "13px"}}>NAME</label>
                                                             </div>
                                                             <div className="col-12 mt-2">
-                                                                <span>{user?.name}</span>
+                                                                <span>{data?.name}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -99,7 +122,7 @@ export default function Profile() {
                                                                 <label style={{color: "#858585", fontSize: "13px"}}>USERNAME</label>
                                                             </div>
                                                             <div className="col-12 mt-2">
-                                                                <span>{user?.username}</span>
+                                                                <span>{data?.username}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -165,7 +188,7 @@ export default function Profile() {
                                                                 <label style={{color: "#858585", fontSize: "13px"}}>EMAIL</label>
                                                             </div>
                                                             <div className="col-12 mt-2">
-                                                                <span>{user?.email}</span>
+                                                                <span>{data?.email}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -198,7 +221,7 @@ export default function Profile() {
                                                                 <label style={{color: "#858585", fontSize: "13px"}}>PHONE NUMBER</label>
                                                             </div>
                                                             <div className="col-12 mt-2">
-                                                                <span>+62{user?.phone}</span>
+                                                                <span>+62{data?.phone}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -255,7 +278,7 @@ export default function Profile() {
                                                     </div>
                                                 </div>
                                                 <div className="col-12 d-flex justify-content-end mt-3">
-                                                    <button className="btn p-2" style={{backgroundColor: "#474747", color: "#FFFFFF", fontSize: "13px"}} data-bs-toggle="modal" data-bs-target="#editUsername"><FontAwesomeIcon icon={faCog} className="me-2" />Edit</button>
+                                                    {/* <button className="btn p-2" style={{backgroundColor: "#474747", color: "#FFFFFF", fontSize: "13px"}} data-bs-toggle="modal" data-bs-target="#editUsername"><FontAwesomeIcon icon={faCog} className="me-2" />Edit</button> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -264,12 +287,12 @@ export default function Profile() {
                             </div>
                         </div>
                     </div>
-                </main>
-            </LayoutsUser>
-            <EditUsername />
-            {/* <EditPassword />
-            <EditEmail />
-            <EditPhone /> */}
+                    <EditUsername />
+                    <EditPassword />
+                    <EditEmail />
+                    <EditPhone />
+                </LayoutsUser>
+            )}
         </>
     )
 }

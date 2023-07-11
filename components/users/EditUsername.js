@@ -7,6 +7,8 @@ import {useRouter} from "next/navigation"
 import Swal from "sweetalert2"
 import Cookies from 'js-cookie'
 import Token from '@/config/userToken'
+import axios from 'axios'
+import headers from '@/config/headers'
 
 export default function EditUsername() {
     const [data, setData] = useState(null)
@@ -16,26 +18,31 @@ export default function EditUsername() {
     const [user, setUser] = useState([])
     const userToken = Cookies.get('token')
     const router = useRouter()
+    const url = process.env.NEXT_PUBLIC_API_URL
 
     useEffect(() => {
         setUser(userToken !== undefined ? Token() : null)
     }, [userToken, user])
 
+    const uuid = user.uuid
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         try {
-    //             const response = await fetch(`api/users/${uuid}`)
-    //             const data = await response.json()
-    //             setData(data.user.username)
-    //             setUsername(data.user.username)
-    //         } catch (e) {
-    //             console.log(e)
-    //         }
-    //     }
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`${url}/user/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
 
-    //     fetchData()
-    // }, [uuid, data])
+                const responseData = response.data.data
+                setData(responseData.username)
+                setUsername(responseData.username)
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        fetchData()
+    },[data, uuid, url])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -44,14 +51,11 @@ export default function EditUsername() {
             if (usernameErrors.length > 0 || username === '') {
                 setErrorMessage('Username not valid')
             } else {
-                const response = await fetch(`api/users/updates/username/${uuid}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username
-                    })
+                const response = await axios.put(`${url}/user/update/username/${uuid}`, {
+                    username
+                }, {
+                    headers: headers,
+                    withCredentials: true
                 })
 
                 if (response.error) {
@@ -68,13 +72,13 @@ export default function EditUsername() {
                         showConfirmButton: false,
                         progressStepsColor: '#E30813',
                         willClose(popup) {
-                            router.refresh()
+                            router.push('/')
                         },
                     })
                 }
             }
         } catch (e) {
-            setErrorMessage('Something went wrong')
+            setErrorMessage('Something went wrong or Username has Ready')
         }
     }
 

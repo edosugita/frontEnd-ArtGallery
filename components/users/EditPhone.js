@@ -1,48 +1,47 @@
+'use client'
 import style from '@/styles/Modal.module.css'
-import {useEffect, useState} from "react";
-import {getCsrfToken, getSession} from "next-auth/react";
-import {validatePhone} from "@/components/validation/validation";
-import {setMessage} from "@/components/Message/messageSlice";
-import Swal from "sweetalert2";
-import {useRouter} from "next/router";
+import {useState, useEffect} from "react"
+import {validatePhone} from "@/components/validation/validation"
+import {useRouter} from "next/navigation"
+import Swal from "sweetalert2"
+import Cookies from 'js-cookie'
+import Token from '@/config/userToken'
+import axios from 'axios'
+import headers from '@/config/headers'
 
 export default function EditPhone() {
-    const [session, setSession] = useState(null)
     const [data, setData] = useState(null)
     const [phone, setPhone] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const { phoneIsValid, phoneErrors } = validatePhone(phone)
+    const [user, setUser] = useState([])
+    const userToken = Cookies.get('token')
     const router = useRouter()
+    const url = process.env.NEXT_PUBLIC_API_URL
 
     useEffect(() => {
-        async function fetchSession() {
-            try {
-                const session = await getSession()
-                setSession(session)
-            } catch (e) {
-                console.log(e)
-            }
-        }
+        setUser(userToken !== undefined ? Token() : null)
+    }, [userToken, user])
 
-        fetchSession()
-    }, [session])
-
-    const uuid = session?.user?.user.uuid_user
+    const uuid = user.uuid
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`api/users/${uuid}`)
-                const data = await response.json()
-                setData(data.user.phone)
-                setPhone(`0${data.user.phone}`)
+                const response = await axios.get(`${url}/user/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+
+                const responseData = response.data.data
+                setData(responseData.phone)
+                setPhone(responseData.phone)
             } catch (e) {
-                console.log(e)
+                console.error(e)
             }
         }
-
         fetchData()
-    }, [uuid, data])
+    },[data, uuid, url])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -51,14 +50,11 @@ export default function EditPhone() {
             if (phoneErrors.length > 0 || phone === '') {
                 setErrorMessage('Phone number not valid')
             } else {
-                const response = await fetch(`api/users/updates/phone/${uuid}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        phone
-                    })
+                const response = await axios.put(`${url}/user/update/phone/${uuid}`, {
+                    phone
+                }, {
+                    headers: headers,
+                    withCredentials: true
                 })
 
                 if (response.error) {
@@ -75,7 +71,7 @@ export default function EditPhone() {
                         showConfirmButton: false,
                         progressStepsColor: '#E30813',
                         willClose(popup) {
-                            router.reload()
+                            router.push('/')
                         },
                     })
                 }
@@ -99,7 +95,6 @@ export default function EditPhone() {
                                 {errorMessage && <>
                                     <div className="alert alert-danger text-center" role="alert">{errorMessage}</div>
                                 </>}
-                                <input name="getCsrfToken" type="hidden" defaultValue={getCsrfToken()} />
                                 <label htmlFor="telp" className="form-label">NEW PHONE NUMBER</label>
                                 <input type="text" className={style.form_control} name='telp' id="telp" placeholder="+628123123123" value={`${phone}`} onChange={(event) => setPhone(event.target.value)} required />
                                 <div id="phone" className="form-text">

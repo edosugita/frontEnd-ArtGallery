@@ -135,6 +135,8 @@ export default function Navbar() {
                                     </>
                                     ) : (
                                         <>
+                                            <li className='text-center'>{user.username}</li>
+                                            <li><hr className="dropdown-divider"/></li>
                                             <li>
                                                 <Link href="user/profile" className={`dropdown-item ${router === 'user/profile' ? 'active' : ''}`}>
                                                     Profile
@@ -151,7 +153,11 @@ export default function Navbar() {
                                                 </Link>
                                             </li>
                                             <li><hr className="dropdown-divider"/></li>
-                                            <li><Link href='#' onClick={() => Logout()} className="dropdown-item" >Logout</Link></li>
+                                            <li>
+                                                <Link href='#' onClick={() => Logout()} className="dropdown-item" >
+                                                    Logout
+                                                </Link>
+                                            </li>
                                         </>
                                     )}
                                 </ul>

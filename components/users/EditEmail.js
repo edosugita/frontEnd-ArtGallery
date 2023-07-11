@@ -1,47 +1,47 @@
+'use client'
 import style from '@/styles/Modal.module.css'
 import {useEffect, useState} from "react"
 import {validateEmail} from "@/components/validation/validation"
-import {getCsrfToken, getSession} from "next-auth/react"
+import {useRouter} from "next/navigation"
 import Swal from "sweetalert2"
-import {useRouter} from "next/router"
+import Cookies from 'js-cookie'
+import Token from '@/config/userToken'
+import axios from 'axios'
+import headers from '@/config/headers'
 
 export default function EditEmail() {
-    const [session, setSession] = useState(null)
     const [data, setData] = useState(null)
     const [email, setEmail] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const { emailIsValid, emailErrors } = validateEmail(email)
-
+    const [user, setUser] = useState([])
+    const userToken = Cookies.get('token')
     const router = useRouter()
+    const url = process.env.NEXT_PUBLIC_API_URL
 
     useEffect(() => {
-        async function fetchSession() {
-            try {
-                const session = await getSession()
-                setSession(session)
-            } catch (e) {
-                console.log({message: e})
-            }
-        }
+        setUser(userToken !== undefined ? Token() : null)
+    }, [userToken, user])
 
-        fetchSession()
-    }, [session])
-    const uuid = session?.user?.user.uuid_user
+    const uuid = user.uuid
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`api/users/${uuid}`)
-                const data = await response.json()
-                setData(data.user.email)
-                setEmail(data.user.email)
+                const response = await axios.get(`${url}/user/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+
+                const responseData = response.data.data
+                setData(responseData.email)
+                setEmail(responseData.email)
             } catch (e) {
-                console.log(e)
+                console.error(e)
             }
         }
-
         fetchData()
-    }, [uuid, data])
+    },[data, uuid, url])
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -50,17 +50,15 @@ export default function EditEmail() {
             if (emailErrors.length > 0 || email === '') {
                 setErrorMessage('Email not valid')
             } else {
-                const response = await fetch(`api/users/updates/email/${uuid}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email
-                    })
+                const response = await axios.put(`${url}/user/update/email/${uuid}`, {
+                    email
+                }, {
+                    headers: headers,
+                    withCredentials: true
                 })
+
                 if (response.error) {
-                    setErrorMessage("Invalid data");
+                    setMessage('Invalid Data')
                 } else {
                     await Swal.fire({
                         title: 'Success',
@@ -73,7 +71,7 @@ export default function EditEmail() {
                         showConfirmButton: false,
                         progressStepsColor: '#E30813',
                         willClose(popup) {
-                            router.reload()
+                            router.push('/')
                         },
                     })
                 }
@@ -82,6 +80,7 @@ export default function EditEmail() {
             setErrorMessage('Something went wrong')
         }
     }
+
     return (
         <>
             <div className="modal fade" id="editEmail" tabIndex="-1" aria-labelledby="editEmailLabel" aria-hidden="true">
@@ -96,7 +95,6 @@ export default function EditEmail() {
                                 {errorMessage && <>
                                     <div className="alert alert-danger text-center" role="alert">{errorMessage}</div>
                                 </>}
-                                <input name="getCsrfToken" type="hidden" defaultValue={getCsrfToken()} />
                                 <label htmlFor="email" className="form-label">NEW EMAIL</label>
                                 <input type="email" className={style.form_control} name='email' id="email" placeholder="CreativeMuse@email.com" value={email} onChange={(event) => setEmail(event.target.value)} required />
                                 <div id="email" className="form-text">
