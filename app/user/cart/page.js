@@ -202,7 +202,7 @@ export default function Cart() {
             const uuid = user.uuid
             await Promise.all(
                 uuidArts.map(async (uuidArt) => {
-                    const response = await axios.delete(`${url}/cart/delete/${uuid}/${uuidArt}`,
+                    const response = await axios.post(`${url}/cart/delete/${uuid}/${uuidArt}`, {},
                     {
                         headers: headers,
                         withCredentials: true
