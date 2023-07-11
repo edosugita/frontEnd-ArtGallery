@@ -10,12 +10,13 @@ import headers from '@/config/headers'
 import Cookies from 'js-cookie'
 import LayoutsUser from '@/components/Layouts/User/Layouts'
 import Token from '@/config/userToken'
+import PlaceBid from '@/components/users/PlaceBid'
 
 export default function BidDetail({params}) {
     const [data, setData] = useState(null)
     const [user, setUser] = useState([])
     const [isLoading, setIsLoading] = useState(true)
-    const [dataBid, setDataBid] = useState(true)
+    const [dataBid, setDataBid] = useState([])
     const [timeString, setTimeString] = useState('')
     const [date, setDate] = useState(null)
     const [clock, setClock] = useState(null)
@@ -40,6 +41,23 @@ export default function BidDetail({params}) {
         setUser(userToken !== undefined ? Token() : null)
         fetchData()
     }, [params, userToken, data])
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/product/bid/get/${data.uuid_art}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+                const responseData = response.data
+                setDataBid(responseData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        
+        fetchData()
+    }, [dataBid, data])
 
     useEffect(() => {
         if (data) {
@@ -68,6 +86,7 @@ export default function BidDetail({params}) {
 
             if (timeDiff <= 0) {
                 setTimeString(timeString = "End")
+                setIsAuctionEnd(true)
             }
         }
     }, [data])
@@ -113,9 +132,9 @@ export default function BidDetail({params}) {
                                                     <>
                                                         <div className="col-12">
                                                             <div className={style.box}>
-                                                                <p>Winner &#128081</p>
-                                                                {dataBid[0].max_bid_price !== null ? (
-                                                                    <h5>&#128081 {dataBid[0].name} &#128081</h5>
+                                                                <p>Winner &#128081;</p>
+                                                                {dataBid.highest_price !== null ? (
+                                                                    <h5>&#128081; {dataBid.highest_price} &#128081;</h5>
                                                                 ) : (
                                                                     <h5>No Buyer</h5>
                                                                 )}
@@ -158,15 +177,10 @@ export default function BidDetail({params}) {
                                             </div>
                                             {isAuctionEnd ? (
                                                 <>
-                                                    <div className="row mt-3">
-                                                        <div className="col-12">
-                                                            <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" onClick={handleCheckout} value={'Buy'} />
-                                                        </div>
-                                                    </div>
                                                 </>
                                             ) : (
                                                 <>
-                                                    {!user && user?.status === 1 ? (
+                                                    {user && user?.status === 1 ? (
                                                     <div className={style.buy_button}>
                                                         <div className="row mt-3">
                                                             <div className="col-12">
@@ -220,7 +234,7 @@ export default function BidDetail({params}) {
                                 </div>
                             </div>
                         </section>
-                        {/* <PlaceBid /> */}
+                        <PlaceBid />
                     </div>
                 </LayoutsUser>
             )}

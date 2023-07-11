@@ -85,14 +85,14 @@ export default function Navbar() {
                             {user !== null && user.status == 1 ? (
                                 <>
                                 <li className="nav-item">
-                                    <Link className={`${style.nav_link} ${router === 'user/notification' ? 'active' : ''}`} href="user/notification">
+                                    <Link className={`${style.nav_link} ${router === '/user/notification' ? 'active' : ''}`} href="/user/notification">
                                         <div className={style.circle}>
                                             <FontAwesomeIcon icon={faBell} />
                                         </div>
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link className={`${style.nav_link} ${router === 'user/cart' ? 'active' : ''}`} href="user/cart">
+                                    <Link className={`${style.nav_link} ${router === '/user/cart' ? 'active' : ''}`} href="/user/cart">
                                         <div className={style.circle}>
                                             <FontAwesomeIcon icon={faCartShopping} />
                                         </div>
@@ -138,7 +138,7 @@ export default function Navbar() {
                                             <li className='text-center'>{user.username}</li>
                                             <li><hr className="dropdown-divider"/></li>
                                             <li>
-                                                <Link href="user/profile" className={`dropdown-item ${router === 'user/profile' ? 'active' : ''}`}>
+                                                <Link href="/user/profile" className={`dropdown-item ${router === '/user/profile' ? 'active' : ''}`}>
                                                     Profile
                                                 </Link>
                                             </li>
