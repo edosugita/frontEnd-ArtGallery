@@ -18,6 +18,7 @@ import Swal from 'sweetalert2'
 export default function Detail({ params }) {
     const [data, setData] = useState(null)
     const [user, setUser] = useState([])
+    const [dataUuid, setDataUuid] = useState('')
     const [isLoading, setIsLoading] = useState(true)
     const router = useRouter()
     
@@ -71,6 +72,70 @@ export default function Detail({ params }) {
         }
     }
 
+    const handleClick = async(data) => {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        const uuid = user.uuid
+        const uuid_art = [data]
+        const response = await axios.post(`${url}/payment/create`, {
+            uuid,
+            uuid_art
+        }, {
+            headers: headers,
+            withCredentials: true
+        })
+        
+        setDataUuid(uuid_art)
+
+        snap.pay(response.data.data.tokenPayment, {
+            onSuccess: function (result) {
+                alert('Payment success!')
+                postData(result)
+            },
+            onPending: function (result) {
+                alert('Waiting for payment!')
+                postData(result)
+            },
+            onError: function (result) {
+                alert('Payment failed!')
+                postData(result)
+            },
+            onClose: function () {
+                alert('You closed the popup without finishing the payment')
+            }
+        })
+    }
+
+    const postData = async(payment) => {
+        if (payment) {
+            const url = process.env.NEXT_PUBLIC_API_URL
+            const uuid = user.uuid
+            const uuid_art = [dataUuid]
+
+            const order_id = payment.order_id
+            const gross_amount = payment.gross_amount
+            const payment_type = payment.payment_type
+            const bank = payment.va_numbers[0].bank
+            const va_number = payment.va_numbers[0].va_number
+            const status_code = payment.status_code
+
+            const response = await axios.post(`${url}/payment/add`, {
+                uuid,
+                uuid_art,
+                order_id,
+                gross_amount,
+                payment_type,
+                bank,
+                va_number,
+                status_code,
+            }, {
+                headers: headers,
+                withCredentials: true
+            })
+
+            console.log(response)
+        }
+    }
+
     return (
         <>
             {isLoading ? (
@@ -111,7 +176,7 @@ export default function Detail({ params }) {
                                                 <div className={style.buy_button}>
                                                     <div className="row mt-3">
                                                         <div className="col-7">
-                                                            <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} />
+                                                            <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} onClick={() => handleClick(data.uuid_art)} />
                                                         </div>
                                                         <div className="col-5">
                                                             <button className={`btn text-light w-100 ${style.btnshop}`} onClick={handleAddToCart}>
