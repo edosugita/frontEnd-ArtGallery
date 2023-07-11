@@ -147,11 +147,11 @@ export default function Navbar() {
                                                     My Collections
                                                 </Link>
                                             </li>
-                                            <li>
+                                            {/* <li>
                                                 <Link href="/user/transaction" className={`dropdown-item ${router === '/user/transaction' ? 'active' : ''}`}>
                                                     Transaction
                                                 </Link>
-                                            </li>
+                                            </li> */}
                                             <li><hr className="dropdown-divider"/></li>
                                             <li>
                                                 <Link href='#' onClick={() => Logout()} className="dropdown-item" >

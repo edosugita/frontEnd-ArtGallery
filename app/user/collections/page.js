@@ -1,40 +1,87 @@
 'use client'
 
-import { useEffect } from 'react'
-import style from '@/styles/Detail.module.css'
+import { useEffect, useState } from 'react'
+import style from '@/styles/SectionHome/SectionTwo.module.css'
 import Image from 'next/image'
-import ArtTest from '@/public/images/png/Image.png'
 import LayoutsUser from '@/components/Layouts/User/Layouts'
+import Cookies from 'js-cookie'
+import Token from '@/config/userToken'
+import axios from 'axios'
+import headers from '@/config/headers'
 
 export default function CollectionsDetail() {
+    const [user, setUser] = useState([])    
+    const [data, setData] = useState([])    
+    const userToken = Cookies.get('token')
+
+    useEffect(() => {
+        setUser(userToken !== undefined ? Token() : null)
+    }, [userToken])
+
+    const uuid = user.uuid
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/collection/get/${uuid}`, {
+                    headers: headers,
+                    withCredentials: true
+                })
+                const responseData = Object.values(response.data.data)
+                setData(responseData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        
+        fetchData()
+    }, [uuid, data])
+
+    console.log(data)
+
     return (
         <>
             <LayoutsUser>
                 <div className="container p-5">
                     <section className={style.section_one}>
                         <div className="row">
-                            <div className="col-lg-7 col-md-12">
+                            <div className="col-md-12 mb-5">
                                 <div className={style.section_img}>
-                                    <Image src={ArtTest} alt='Images' />
+                                    <h5 className={style.h5}>My Collection</h5>
                                 </div>
                             </div>
-                            <div className="col-lg-5 col-md-12">
-                                <div className="col-12 mb-5">
-                                    <div className={style.information}>
-                                        <h5 className={style.h5}>Form in Space</h5>
-                                        <p className={style.by}>By<span className={style.name}> Doja</span></p>
-                                        <p className={style.desc}>&#34;Form in Space&#34; is a visual art piece that explores the relationship between form and space. This artwork is an exploration of the interplay between objects and the space they occupy, and how this relationship can evoke a range of emotional and physical responses in the viewer. The artist has used various techniques and mediums to create a dynamic and thought-provoking composition that invites the viewer to contemplate the complex relationship between form and space.</p>
-                                    </div>
-                                </div>
-                                <div className="col-12">
-                                    <div className={style.buy_information}>
-                                        <div className={style.box}>
-                                            <p>price</p>
-                                            <h5>RP 180.000</h5>
+                            
+                            {data && data.map((item) => (
+                                <div className='col-md-4 col-sm-6 col-12 mb-3 h-100' key={item.uuid_art}>
+                                    <div className="text-decoration-none text-light">
+                                        <div className={style.card}>
+                                            <div style={{height: '300px', width: '100%', overflow: "hidden"}}>
+                                                <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.art.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                            </div>
+                                            <div className={style.card_body}>
+                                                <h5 style={{height:'4rem'}}>{item.art.artname}</h5>
+                                                <div className="mb-3 mt-2">
+                                                    {item.art.kategori.split(",").map((kategori) => (
+                                                        <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                    ))}
+                                                </div>
+                                                <p><span>By</span> {item.art.artist}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                // <div className="col-md-3 col-sm-6 col-12 mb-4" key={item.uuid_art}>
+                                //     <div className='rounded overflow-hidden' style={{width:'250px', height: '250px'}}>
+                                //         <Image 
+                                //             src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.art.image}`}
+                                //             alt='My Collection'
+                                //             width={512}
+                                //             height={512}
+                                //             className='w-100 h-100'
+                                //         />
+                                //     </div>
+                                // </div>
+                            ))}
                         </div>
                     </section>
                 </div>
