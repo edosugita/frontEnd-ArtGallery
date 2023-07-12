@@ -42,14 +42,12 @@ export default function Notification() {
         }
 
         fetchData()
-    }, [uuid])
+    }, [uuid, data])
 
     const handleDelete = async (itemId) => {
       try {
           setIsDeleting(true)
-          const itemData = data.find((item) => item.id_notification === itemId)
-          const deleteItemDataWithUuidArt = { ...itemData}
-          setDeleteItemData(deleteItemDataWithUuidArt)
+          setDeleteItemData(itemId)
       } catch (error) {
           console.error(error)
       }
@@ -80,7 +78,7 @@ export default function Notification() {
                                         <td>{item.content}</td>
                                         <td>
                                             <div className="d-flex align-items-center h-100">
-                                              <button className="btn badge" data-bs-toggle="modal" data-bs-target="#deleteProduct" onClick={() => handleDelete(item.id_notification)}>
+                                              <button className="btn badge" data-bs-toggle="modal" data-bs-target="#deleteProduct" onClick={() => handleDelete(item)}>
                                                   <FontAwesomeIcon icon={faTrash} color='white' className="me-2" />
                                                   Hapus
                                               </button>

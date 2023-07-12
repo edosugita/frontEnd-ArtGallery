@@ -17,8 +17,6 @@ export default function DeleteMessage({ deleteItemData, uuidUser }) {
                 withCredentials: true
             })
 
-            console.log(response)
-
             if (response.status === 200) {
                 await Swal.fire({
                     title: 'Success',
@@ -56,7 +54,6 @@ export default function DeleteMessage({ deleteItemData, uuidUser }) {
 
         setIsDeleting(false)
     }
-
 
     return (
         <>
