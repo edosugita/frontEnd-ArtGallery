@@ -154,7 +154,7 @@ export default function Gallery() {
                         setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
                       }
                     >
-                      <span aria-hidden="true">&laquo</span>
+                      <span aria-hidden="true">&laquo;</span>
                     </a>
                   </li>
                   {items.length > 0 &&
@@ -191,7 +191,7 @@ export default function Gallery() {
                       }
                       disabled={getPaginatedItems(items, currentPage + 1).length === 0}
                     >
-                      <span aria-hidden="true">&raquo</span>
+                      <span aria-hidden="true">&raquo;</span>
                     </a>
                   </li>
                 </ul>

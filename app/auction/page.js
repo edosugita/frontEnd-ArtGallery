@@ -92,43 +92,59 @@ export default function Auction() {
                             <Filters />
                         </div>
 
-                        <div className="join flex justify-center">
-                            <button
-                                className="join-item btn"
-                                onClick={() =>
-                                setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
-                                }
-                            >
-                                «
-                            </button>
-                            {items.length > 0 &&
-                                Array.from(
-                                { length: Math.ceil(items.length / ITEMS_PER_PAGE) },
-                                (_, i) => (
-                                    <button
-                                    className={`join-item btn ${currentPage === i + 1 ? "active" : ""}`}
-                                    key={i}
-                                    onClick={() => setCurrentPage(i + 1)}
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination pagination-sm justify-content-center">
+                                <li className="page-item">
+                                    <a
+                                    className="page-link"
+                                    href="#"
+                                    aria-label="Previous"
+                                    onClick={() =>
+                                        setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
+                                    }
                                     >
-                                    Page {i + 1}
-                                    </button>
-                                )
+                                    <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                {items.length > 0 &&
+                                    Array.from(
+                                    { length: Math.ceil(items.length / ITEMS_PER_PAGE) },
+                                    (_, i) => (
+                                        <li
+                                        className={`page-item ${
+                                            currentPage === i + 1 ? 'active' : ''
+                                        }`}
+                                        key={i}
+                                        >
+                                        <a
+                                            className="page-link"
+                                            href="#"
+                                            onClick={() => setCurrentPage(i + 1)}
+                                        >
+                                            {i + 1}
+                                        </a>
+                                        </li>
+                                    )
                                 )}
-                            <button
-                                className="join-item btn"
-                                onClick={() =>
-                                setCurrentPage((prevPage) =>
-                                    getPaginatedItems(items, prevPage + 1).length === 0
-                                    ? prevPage
-                                    : prevPage + 1
-                                )
-                                }
-                                disabled={getPaginatedItems(items, currentPage + 1).length === 0}
-                            >
-                                »
-                            </button>
-                        </div>
-
+                                <li className="page-item">
+                                    <a
+                                    className="page-link"
+                                    href="#"
+                                    aria-label="Next"
+                                    onClick={() =>
+                                        setCurrentPage((prevPage) =>
+                                        getPaginatedItems(items, prevPage + 1).length === 0
+                                            ? prevPage
+                                            : prevPage + 1
+                                        )
+                                    }
+                                    disabled={getPaginatedItems(items, currentPage + 1).length === 0}
+                                    >
+                                    <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             )}
