@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { Component } from "react";
-import Slider from "react-slick";
-import style from "@/styles/SectionHome/SectionTwo.module.css";
-import Link from "next/link";
-import axios from "axios";
-import headers from "@/config/headers";
+import Image from "next/image"
+import { Component } from "react"
+import Slider from "react-slick"
+import style from "@/styles/SectionHome/SectionTwo.module.css"
+import Link from "next/link"
+import axios from "axios"
+import headers from "@/config/headers"
 
 export default class CarouselSale extends Component {
     state = {
         data: [],
-    };
+    }
 
     async componentDidMount() {
         try {
@@ -17,28 +17,33 @@ export default class CarouselSale extends Component {
                 headers: headers,
                 withCredentials: true
             })
-            const data = Object.values(response.data.data);
+            const data = Object.values(response.data.data)
 
-            this.setState({ data });
+            this.setState({ data })
         } catch (e) {
             console.log({message: e})
         }
     }
 
     render() {
-        const { data } = this.state;
+        const { data } = this.state
+        let slidesToShow = 5
+    
+        if (data.length < 5) {
+            slidesToShow = data.length
+        }
 
         const settings = {
             className: "center",
             infinite: true,
             centerPadding: "60px",
-            slidesToShow: 5,
+            slidesToShow: slidesToShow,
             swipeToSlide: true,
             responsive: [
                 {
                     breakpoint: 992,
                     settings: {
-                        slidesToShow: 4,
+                        slidesToShow: data.length < 4 ? data.length : 4,
                         swipeToSlide: true,
                         infinite: true,
                         dots: true,
@@ -47,7 +52,7 @@ export default class CarouselSale extends Component {
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 2,
+                        slidesToShow: data.length < 2 ? data.length : 2,
                         swipeToSlide: true,
                         initialSlide: 2,
                     },
@@ -55,14 +60,14 @@ export default class CarouselSale extends Component {
                 {
                     breakpoint: 480,
                     settings: {
-                        slidesToShow: 1,
+                        slidesToShow: data.length < 1 ? data.length : 1,
                         swipeToSlide: true,
                     },
                 },
             ],
             afterChange: function (index) {
             },
-        };
+        }
 
         return (
             <div>
@@ -107,6 +112,6 @@ export default class CarouselSale extends Component {
                     ))}
                 </Slider>
             </div>
-        );
+        )
     }
 }

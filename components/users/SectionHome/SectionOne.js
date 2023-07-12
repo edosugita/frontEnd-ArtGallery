@@ -22,6 +22,7 @@ export default function SectionOne() {
                     withCredentials: true
                 })
                 const data = Object.values(response.data.data);
+                console.log(data)
                 const middleIndex = Math.floor(data.length / 2);
                 const slicedData = data.slice(middleIndex - 1, middleIndex + 2); 
                 setData(slicedData)
@@ -67,8 +68,6 @@ export default function SectionOne() {
             }
         })
     }
-
-    console.log(data)
 
     const postData = async(payment) => {
         console.log(payment)

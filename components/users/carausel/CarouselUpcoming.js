@@ -36,40 +36,46 @@ export default class CarouselOnGoing extends Component {
 
     render() {
         const { data } = this.state
+        let slidesToShow = 5
+    
+        if (data.length < 5) {
+            slidesToShow = data.length
+        }
+
         const settings = {
             className: "center",
             infinite: true,
             centerPadding: "60px",
-            slidesToShow: 5,
+            slidesToShow: slidesToShow,
             swipeToSlide: true,
             responsive: [
                 {
                     breakpoint: 992,
                     settings: {
-                        slidesToShow: 4,
+                        slidesToShow: data.length < 4 ? data.length : 4,
                         swipeToSlide: true,
                         infinite: true,
-                        dots: true
-                    }
+                        dots: true,
+                    },
                 },
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 2,
+                        slidesToShow: data.length < 2 ? data.length : 2,
                         swipeToSlide: true,
-                        initialSlide: 2
-                    }
+                        initialSlide: 2,
+                    },
                 },
                 {
                     breakpoint: 480,
                     settings: {
-                        slidesToShow: 1,
+                        slidesToShow: data.length < 1 ? data.length : 1,
                         swipeToSlide: true,
-                    }
-                }
+                    },
+                },
             ],
-            afterChange: function(index) {
-            }
+            afterChange: function (index) {
+            },
         }
         return (
             <div>

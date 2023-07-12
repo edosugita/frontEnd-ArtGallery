@@ -37,18 +37,23 @@ export default class CarouselNewsArt extends Component {
 
     render() {
         const { data } = this.state
+        let slidesToShow = 3
+    
+        if (data.length < 3) {
+            slidesToShow = data.length
+        }
 
         const settings = {
             className: "center",
             infinite: true,
             centerPadding: "60px",
-            slidesToShow: 3,
+            slidesToShow: slidesToShow,
             swipeToSlide: true,
             responsive: [
                 {
                     breakpoint: 992,
                     settings: {
-                        slidesToShow: 3,
+                        slidesToShow: data.length < 3 ? data.length : 3,
                         swipeToSlide: true,
                         infinite: true,
                         dots: true,
@@ -57,7 +62,7 @@ export default class CarouselNewsArt extends Component {
                 {
                     breakpoint: 768,
                     settings: {
-                        slidesToShow: 2,
+                        slidesToShow: data.length < 2 ? data.length : 2,
                         swipeToSlide: true,
                         initialSlide: 2,
                     },
@@ -65,7 +70,7 @@ export default class CarouselNewsArt extends Component {
                 {
                     breakpoint: 480,
                     settings: {
-                        slidesToShow: 1,
+                        slidesToShow: data.length < 1 ? data.length : 1,
                         swipeToSlide: true,
                     },
                 },
