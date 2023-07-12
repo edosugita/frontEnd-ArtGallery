@@ -62,28 +62,32 @@ export default function Auction() {
                         <div className="col-md-9 col-12 mb-4">
                             <div className="row">
                                 {getPaginatedItems(items, currentPage).map((item) => (
-                                    <div className='col-lg-3 col-md-4 col-sm-6 col-12 mb-3' key={item.id}>
-                                        <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
-                                            <div className={styles.card}>
-                                                <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
-                                                    <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
-                                                </div>
-                                                <div className={styles.card_body}>
-                                                    <h5 style={{height: '5rem'}}>{item.artname}</h5>
-                                                    <div className="mb-3 mt-2" style={{height: '4rem'}}>
-                                                        {item.kategori.split(",").map((kategori) => (
-                                                            <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
-                                                        ))}
+                                    <>
+                                        {item.status === '0' ? null : (
+                                            <div className='col-lg-3 col-md-4 col-sm-6 col-12 mb-3' key={item.id}>
+                                                <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
+                                                    <div className={styles.card}>
+                                                        <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
+                                                            <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                                        </div>
+                                                        <div className={styles.card_body}>
+                                                            <h5 style={{height: '5rem'}}>{item.artname}</h5>
+                                                            <div className="mb-3 mt-2" style={{height: '4rem'}}>
+                                                                {item.kategori.split(",").map((kategori) => (
+                                                                    <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                                ))}
+                                                            </div>
+                                                            <p><span>By</span> {item.artist}</p>
+                                                                <span className={styles.bid}>Best Bid</span>
+                                                            <p className="card-text">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.bid_price)}</p>
+                                                                <label className={styles.bid}>End Auction</label>
+                                                            <p className="card-text">{format(new Date(item.end_bid), "dd/MM/yyyy 'at' hh:mm a")}</p>
+                                                        </div>
                                                     </div>
-                                                    <p><span>By</span> {item.artist}</p>
-                                                        <span className={styles.bid}>Best Bid</span>
-                                                    <p className="card-text">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.bid_price)}</p>
-                                                        <label className={styles.bid}>End Auction</label>
-                                                    <p className="card-text">{format(new Date(item.end_bid), "dd/MM/yyyy 'at' hh:mm a")}</p>
-                                                </div>
+                                                </Link>
                                             </div>
-                                        </Link>
-                                    </div>
+                                        )}
+                                    </>
                                 ))}
                             </div>
                         </div>

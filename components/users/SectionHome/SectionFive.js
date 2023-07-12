@@ -67,22 +67,26 @@ export default function SectionFive() {
                             </div>
 
                             {dataManga.map((item, index) => (
-                                <div className={`col-12 ${style.section_five_12}`} key={index}>
-                                    <Link href='#' className={style.section_five_card}>
-                                        <div className="row slign-items-center">
-                                            <div className="col-5">
-                                                <div className={style.section_five_images}>
-                                                    <Image src={`/images/png/${item.image}`} width={500} height={500} alt='Imges' />
+                                <>
+                                    {item.status === '0' ? null : (
+                                        <div className={`col-12 ${style.section_five_12}`} key={index}>
+                                            <Link href='#' className={style.section_five_card}>
+                                                <div className="row slign-items-center">
+                                                    <div className="col-5">
+                                                        <div className={style.section_five_images}>
+                                                            <Image src={`/images/png/${item.image}`} width={500} height={500} alt='Imges' />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-6">
+                                                        <h6 className={style.section_five_title}>{item.artname}</h6>
+                                                        <h6 className={style.section_five_by}>By {item.username}</h6>
+                                                        <h6 className={style.section_five_title}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="col-6">
-                                                <h6 className={style.section_five_title}>{item.artname}</h6>
-                                                <h6 className={style.section_five_by}>By {item.username}</h6>
-                                                <h6 className={style.section_five_title}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</h6>
-                                            </div>
+                                            </Link>
                                         </div>
-                                    </Link>
-                                </div>
+                                    )}
+                                </>
                             ))}
                         </div>
                     </div>

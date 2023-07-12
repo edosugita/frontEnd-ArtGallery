@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { Component } from "react";
-import Slider from "react-slick";
-import style from "@/styles/SectionHome/SectionSeven.module.css";
-import Link from "next/link";
-import axios from "axios";
-import headers from "@/config/headers";
+import Image from "next/image"
+import { Component } from "react"
+import Slider from "react-slick"
+import style from "@/styles/SectionHome/SectionSeven.module.css"
+import Link from "next/link"
+import axios from "axios"
+import headers from "@/config/headers"
 
 export default class CarouselOnGoing extends Component {
     state = {
         data: [],
-    };
+    }
 
     async componentDidMount() {
         try {
@@ -17,25 +17,25 @@ export default class CarouselOnGoing extends Component {
                 headers: headers,
                 withCredentials: true
             })
-            const data = Object.values(response.data.data);
+            const data = Object.values(response.data.data)
 
-            this.setState({ data });
+            this.setState({ data })
         } catch (e) {
             console.log({message: e})
         }
 
         // jalankan timer setiap 1 detik untuk menghitung perhitungan mundur
         this.interval = setInterval(() => {
-            this.forceUpdate();
-        }, 1000);
+            this.forceUpdate()
+        }, 1000)
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        clearInterval(this.interval)
     }
 
     render() {
-        const { data } = this.state;
+        const { data } = this.state
         const settings = {
             className: "center",
             infinite: true,
@@ -70,68 +70,72 @@ export default class CarouselOnGoing extends Component {
             ],
             afterChange: function(index) {
             }
-        };
+        }
         return (
             <div>
                 <Slider {...settings}>
                     {data.map((item, index) => {
                         const now = new Date()
-                        const endBidStr = item.end_bid;
+                        const endBidStr = item.end_bid
 
-                        const endBidObj = new Date(endBidStr);
-                        const timeDiff = endBidObj - now;
-                        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                        const hours = Math.floor(timeDiff / (1000 * 60 * 60) % 24);
-                        const minutes = Math.floor((timeDiff / (1000 * 60)) % 60);
-                        const seconds = Math.floor((timeDiff / 1000) % 60);
+                        const endBidObj = new Date(endBidStr)
+                        const timeDiff = endBidObj - now
+                        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+                        const hours = Math.floor(timeDiff / (1000 * 60 * 60) % 24)
+                        const minutes = Math.floor((timeDiff / (1000 * 60)) % 60)
+                        const seconds = Math.floor((timeDiff / 1000) % 60)
 
-                        let timeString = "";
+                        let timeString = ""
                         if (days > 0) {
-                            timeString += days + "d : ";
+                            timeString += days + "d : "
                         }
                         if (hours > 0 || days > 0) {
-                            timeString += hours + "h : ";
+                            timeString += hours + "h : "
                         }
                         if (minutes > 0 || hours > 0 || days > 0) {
-                            timeString += minutes + "m : ";
+                            timeString += minutes + "m : "
                         }
-                        timeString += seconds + "s";
+                        timeString += seconds + "s"
 
                         if (timeDiff <= 0) {
-                            timeString = "End";
+                            timeString = "End"
                         }
 
                         return (
-                            <div key={item.index}>
-                                <div className='me-2 ms-2'>
-                                    <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
-                                        <div className={style.card}>
-                                            <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
-                                                <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
-                                            </div>
-                                            <div className={style.card_body}>
-                                                <h5 style={{height:'5rem'}}>{item.artname}</h5>
-                                                <div className="mb-3 mt-2">
-                                                    {item.kategori.split(",").map((kategori) => (
-                                                        <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
-                                                    ))}
+                            <>
+                                {item.status === '0' ? null : (
+                                    <div key={item.index}>
+                                        <div className='me-2 ms-2'>
+                                            <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
+                                                <div className={style.card}>
+                                                    <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
+                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                                    </div>
+                                                    <div className={style.card_body}>
+                                                        <h5 style={{height:'5rem'}}>{item.artname}</h5>
+                                                        <div className="mb-3 mt-2">
+                                                            {item.kategori.split(",").map((kategori) => (
+                                                                <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                            ))}
+                                                        </div>
+                                                        <p><span>By</span> {item.artist}</p>
+                                                        <span className={style.bid}>Best Bid</span>
+                                                        <p className="card-text">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.bid_price)}</p>
+                                                        <label className={style.bid}>End Auction</label>
+                                                        <p className="card-text">
+                                                            {timeString}
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <p><span>By</span> {item.artist}</p>
-                                                <span className={style.bid}>Best Bid</span>
-                                                <p className="card-text">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.bid_price)}</p>
-                                                <label className={style.bid}>End Auction</label>
-                                                <p className="card-text">
-                                                    {timeString}
-                                                </p>
-                                            </div>
+                                            </Link>
                                         </div>
-                                    </Link>
-                                </div>
-                            </div>
-                        );
+                                    </div>
+                                )}
+                            </>
+                        )
                     })}
                 </Slider>
             </div>
-        );
+        )
     }
 }

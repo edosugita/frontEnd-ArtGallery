@@ -11,6 +11,7 @@ import Cookies from 'js-cookie'
 import LayoutsUser from '@/components/Layouts/User/Layouts'
 import Token from '@/config/userToken'
 import PlaceBid from '@/components/users/PlaceBid'
+import { useRouter } from 'next/navigation'
 
 export default function BidDetail({params}) {
     const [data, setData] = useState(null)
@@ -21,6 +22,8 @@ export default function BidDetail({params}) {
     const [date, setDate] = useState(null)
     const [clock, setClock] = useState(null)
     const [isAuctionEnd, setIsAuctionEnd] = useState(false)
+
+    const router = useRouter
 
     const userToken = Cookies.get('token')
 
@@ -100,143 +103,151 @@ export default function BidDetail({params}) {
                     </div>
                 </div>
             ) : (
-                <LayoutsUser>
-                    <div className="container p-5">
-                        <section className={style.section_one}>
-                            <div className="row">
-                                <div className="col-lg-7 col-md-12">
-                                    <div className={style.section_img}>
-                                        <div style={{height: '450px', width: '100%', overflow: "hidden"}}>
-                                            {data && (
-                                                <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
-                                            )}
+                <>
+                    {data.status === '0' ? (
+                        <>
+                            {router.push('/gallery')}
+                        </>
+                    ) : (
+                        <LayoutsUser>
+                            <div className="container p-5">
+                                <section className={style.section_one}>
+                                    <div className="row">
+                                        <div className="col-lg-7 col-md-12">
+                                            <div className={style.section_img}>
+                                                <div style={{height: '450px', width: '100%', overflow: "hidden"}}>
+                                                    {data && (
+                                                        <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${data.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-5 col-md-12 d-flex flex-column justify-content-between">
-                                    <div className="col-12 mb-5">
-                                        <div className={style.information}>
-                                            {data &&
-                                                <>
-                                                    <h5 className={style.h5}>{data.artname}</h5>
-                                                    <p className={style.by}>By<span className={style.name}> {data.artist}</span></p>
-                                                    <p className={style.desc}>{data.description}</p>
-                                                </>
-                                            }
-                                        </div>
-                                    </div>
-                                    <div className="col-12">
-                                        <div className={style.buy_information}>
-                                            <div className="row">
-                                                {isAuctionEnd ? (
-                                                    <>
-                                                        <div className="col-12">
-                                                            <div className={style.box}>
-                                                                <p>Winner &#128081;</p>
-                                                                {dataBid.highest_price !== null ? (
-                                                                    <h5>&#128081; {dataBid.highest_price} &#128081;</h5>
-                                                                ) : (
-                                                                    <h5>No Buyer</h5>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <div className="col-md-6 col-sm-6 col-12 mb-3">
-                                                            <div className={style.box}>
-                                                                <p>Open Bid</p>
-                                                                {data && <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.bid_price)}</h5>}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6 col-sm-6 col-12 mb-3">
-                                                            <div className={style.box}>
-                                                                <p>Start Auction</p>
-                                                                {data && <h5>{format(new Date(data.end_bid), "dd/MM/yyyy 'at' hh:mm a")}</h5>}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6 col-sm-6 col-12 mb-3">
-                                                            <div className={style.box}>
-                                                                <p>Best Bid</p>
-                                                                {!dataBid ? (
-                                                                    <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dataBid[0].max_bid_price)}</h5>
-                                                                ) : (
-                                                                    <h5>Rp 0,00</h5>
-                                                                )}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6 col-sm-6 col-12 mb-3">
-                                                            <div className={style.box}>
-                                                                <p>End Auction</p>
+                                        <div className="col-lg-5 col-md-12 d-flex flex-column justify-content-between">
+                                            <div className="col-12 mb-5">
+                                                <div className={style.information}>
+                                                    {data &&
+                                                        <>
+                                                            <h5 className={style.h5}>{data.artname}</h5>
+                                                            <p className={style.by}>By<span className={style.name}> {data.artist}</span></p>
+                                                            <p className={style.desc}>{data.description}</p>
+                                                        </>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className={style.buy_information}>
+                                                    <div className="row">
+                                                        {isAuctionEnd ? (
+                                                            <>
+                                                                <div className="col-12">
+                                                                    <div className={style.box}>
+                                                                        <p>Winner &#128081;</p>
+                                                                        {dataBid.highest_price !== null ? (
+                                                                            <h5>&#128081; {dataBid.highest_price} &#128081;</h5>
+                                                                        ) : (
+                                                                            <h5>No Buyer</h5>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <div className="col-md-6 col-sm-6 col-12 mb-3">
+                                                                    <div className={style.box}>
+                                                                        <p>Open Bid</p>
+                                                                        {data && <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(data.bid_price)}</h5>}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-6 col-sm-6 col-12 mb-3">
+                                                                    <div className={style.box}>
+                                                                        <p>Start Auction</p>
+                                                                        {data && <h5>{format(new Date(data.end_bid), "dd/MM/yyyy 'at' hh:mm a")}</h5>}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-6 col-sm-6 col-12 mb-3">
+                                                                    <div className={style.box}>
+                                                                        <p>Best Bid</p>
+                                                                        {!dataBid ? (
+                                                                            <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dataBid[0].max_bid_price)}</h5>
+                                                                        ) : (
+                                                                            <h5>Rp 0,00</h5>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                                <div className="col-md-6 col-sm-6 col-12 mb-3">
+                                                                    <div className={style.box}>
+                                                                        <p>End Auction</p>
 
-                                                                {data && <h5>{timeString}</h5>}
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )}
-                                            </div>
-                                            {isAuctionEnd ? (
-                                                <>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {user && user?.status === 1 ? (
-                                                    <div className={style.buy_button}>
-                                                        <div className="row mt-3">
-                                                            <div className="col-12">
-                                                                <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} data-bs-toggle="modal" data-bs-target="#placeBid" />
-                                                            </div>
-                                                        </div>
+                                                                        {data && <h5>{timeString}</h5>}
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        )}
                                                     </div>
-                                                    ) : <></>}
-                                                </>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <section className={style.section}>
-                            <div className="row">
-                                <div className="col-12">
-                                    <div className="d-flex align-items-center">
-                                        <div className='col-6 mb-3'>
-                                            <h4 className={style.h4_title}>On Going Auction</h4>
-                                        </div>
-                                        <div className='col-6 mb-3'>
-                                            <div className='d-flex justify-content-end'>
-                                                <input className={`btn rounded-top-3 ${style.section_btn}`} type='button' value='See All' />
+                                                    {isAuctionEnd ? (
+                                                        <>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            {user && user?.status === 1 ? (
+                                                            <div className={style.buy_button}>
+                                                                <div className="row mt-3">
+                                                                    <div className="col-12">
+                                                                        <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} data-bs-toggle="modal" data-bs-target="#placeBid" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            ) : <></>}
+                                                        </>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-12">
-                                    <CarouselOnGoing />
-                                </div>
-                            </div>
-                        </section>
-                        <section className={style.section}>
-                            <div className="row">
-                                <div className="col-12">
-                                    <div className="d-flex align-items-center">
-                                        <div className='col-6 mb-3'>
-                                            <h4 className={style.h4_title}>Upcoming Auction</h4>
-                                        </div>
-                                        <div className='col-6 mb-3'>
-                                            <div className='d-flex justify-content-end'>
-                                                <input className={`btn rounded-top-3 ${style.section_btn}`} type='button' value='See All' />
+                                </section>
+                                <section className={style.section}>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="d-flex align-items-center">
+                                                <div className='col-6 mb-3'>
+                                                    <h4 className={style.h4_title}>On Going Auction</h4>
+                                                </div>
+                                                <div className='col-6 mb-3'>
+                                                    <div className='d-flex justify-content-end'>
+                                                        <input className={`btn rounded-top-3 ${style.section_btn}`} type='button' value='See All' />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
+                                        <div className="col-12">
+                                            <CarouselOnGoing />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-12">
-                                    <CarouselUpcoming />
-                                </div>
+                                </section>
+                                <section className={style.section}>
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <div className="d-flex align-items-center">
+                                                <div className='col-6 mb-3'>
+                                                    <h4 className={style.h4_title}>Upcoming Auction</h4>
+                                                </div>
+                                                <div className='col-6 mb-3'>
+                                                    <div className='d-flex justify-content-end'>
+                                                        <input className={`btn rounded-top-3 ${style.section_btn}`} type='button' value='See All' />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-12">
+                                            <CarouselUpcoming />
+                                        </div>
+                                    </div>
+                                </section>
+                                <PlaceBid />
                             </div>
-                        </section>
-                        <PlaceBid />
-                    </div>
-                </LayoutsUser>
+                        </LayoutsUser>
+                    )}
+                </>
             )}
 
         </>

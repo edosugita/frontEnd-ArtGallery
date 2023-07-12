@@ -68,6 +68,8 @@ export default function SectionOne() {
         })
     }
 
+    console.log(data)
+
     const postData = async(payment) => {
         console.log(payment)
         if (payment) {
@@ -133,50 +135,54 @@ export default function SectionOne() {
                         <div className="col-12">
                             <div className="carousel-inner">
                                 {data.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`carousel-item ${index === 0 ? "active" : ""}`}
-                                    >
-                                        <div className={`row ${style.row}`}>
-                                            <div className="col-md-5 col-sm-12">
-                                                <h1 className={`mb-3 ${style.h1}`}>{item.artname}</h1>
-                                                <span className={style.span}>{item.description}</span>
-                                                <h2 className={`mt-3 ${style.h2}`}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</h2>
-                                                <div className={`d-flex justify-content-start gap-4 mt-3 ${style.button_group}`}>
-                                                    {user ? (
-                                                        <input
-                                                            className={`btn btn-danger rounded-top-3 ${style.btn}`}
-                                                            type="button"
-                                                            onClick={() => handleClick(item.uuid_art)}
-                                                            value="Buy Now"
-                                                        />
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                    <Link
-                                                        className={style.link_detail}
-                                                        href={`/detail/${item.slug}`}
-                                                    >
-                                                        See Detail
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                            <div className="col-md-7 col-sm-12">
-                                                <div className={`d-flex justify-content-md-end justify-content-sm-center ${style.section_one_img}`} >
-                                                    <div style={{height: '300px', width: '100%'}}>
-                                                        <Image
-                                                            src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`}
-                                                            alt="Image Slider"
-                                                            height="520"
-                                                            width="520"
-                                                            className="rounded"
-                                                            style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}}
-                                                        />
+                                    <>
+                                        {item.status === '0' ? null : (
+                                            <div
+                                                key={index}
+                                                className={`carousel-item ${index === 0 ? "active" : ""}`}
+                                            >
+                                                <div className={`row ${style.row}`}>
+                                                    <div className="col-md-5 col-sm-12">
+                                                        <h1 className={`mb-3 ${style.h1}`}>{item.artname}</h1>
+                                                        <span className={style.span}>{item.description}</span>
+                                                        <h2 className={`mt-3 ${style.h2}`}>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</h2>
+                                                        <div className={`d-flex justify-content-start gap-4 mt-3 ${style.button_group}`}>
+                                                            {user ? (
+                                                                <input
+                                                                    className={`btn btn-danger rounded-top-3 ${style.btn}`}
+                                                                    type="button"
+                                                                    onClick={() => handleClick(item.uuid_art)}
+                                                                    value="Buy Now"
+                                                                />
+                                                            ) : (
+                                                                <></>
+                                                            )}
+                                                            <Link
+                                                                className={style.link_detail}
+                                                                href={`/detail/${item.slug}`}
+                                                            >
+                                                                See Detail
+                                                            </Link>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-md-7 col-sm-12">
+                                                        <div className={`d-flex justify-content-md-end justify-content-sm-center ${style.section_one_img}`} >
+                                                            <div style={{height: '300px', width: '100%'}}>
+                                                                <Image
+                                                                    src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`}
+                                                                    alt="Image Slider"
+                                                                    height="520"
+                                                                    width="520"
+                                                                    className="rounded"
+                                                                    style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}}
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        )}
+                                    </>
                                 ))}
                             </div>
                         </div>

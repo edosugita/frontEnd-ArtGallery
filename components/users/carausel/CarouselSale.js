@@ -68,38 +68,42 @@ export default class CarouselSale extends Component {
             <div>
                 <Slider {...settings}>
                     {data.map((item) => (
-                        <div key={item.uuid_art}>
-                            <div className="me-2 ms-2">
-                                <Link
-                                    className="text-decoration-none text-light"
-                                    href={`/detail/${item.slug}`}
-                                >
-                                    <div className={style.card}>
-                                        <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
-                                            <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
-                                        </div>
-                                        <div className={style.card_body}>
-                                            <h5 style={{height: '5rem'}}>{item.artname}</h5>
-                                            <div className="mb-3 mt-2" style={{height: '4rem'}}>
-                                                {item.kategori.split(",").map((kategori) => (
-                                                    <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
-                                                ))}
+                        <>
+                            {item.status === '0' ? null : (
+                                <div key={item.uuid_art}>
+                                    <div className="me-2 ms-2">
+                                        <Link
+                                            className="text-decoration-none text-light"
+                                            href={`/detail/${item.slug}`}
+                                        >
+                                            <div className={style.card}>
+                                                <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
+                                                    <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
+                                                </div>
+                                                <div className={style.card_body}>
+                                                    <h5 style={{height: '5rem'}}>{item.artname}</h5>
+                                                    <div className="mb-3 mt-2" style={{height: '4rem'}}>
+                                                        {item.kategori.split(",").map((kategori) => (
+                                                            <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
+                                                        ))}
+                                                    </div>
+                                                    <p>
+                                                        <span>By</span> {item.artist}
+                                                    </p>
+                                                    <div className={`d-flex align-items-center gap-2 ${style.discount}`}>
+                                                        <p>{item.discount}%</p>
+                                                        <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</p>
+                                                    </div>
+                                                    <p className={`card-text ${style.card_text}`}>
+                                                        {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price - (item.price * item.discount / 100))}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <p>
-                                                <span>By</span> {item.artist}
-                                            </p>
-                                            <div className={`d-flex align-items-center gap-2 ${style.discount}`}>
-                                                <p>{item.discount}%</p>
-                                                <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price)}</p>
-                                            </div>
-                                            <p className={`card-text ${style.card_text}`}>
-                                                {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.price - (item.price * item.discount / 100))}
-                                            </p>
-                                        </div>
+                                        </Link>
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
+                                </div>
+                            )}
+                        </>
                     ))}
                 </Slider>
             </div>
