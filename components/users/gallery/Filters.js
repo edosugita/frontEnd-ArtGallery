@@ -48,8 +48,15 @@ export default function Filters({ onSubmit }) {
       sort_type: sortType,
       categories: categories,
       label_filters: labelFilters,
-      auction_status: labelFilters.includes('on_going') || labelFilters.includes('upcoming'),
     };
+
+    if (labelFilters.includes('on_going')) {
+      filterData.label_filters.push('bid');
+    }
+
+    if (labelFilters.includes('upcoming')) {
+      filterData.label_filters.push('upcoming');
+    }
 
     onSubmit(filterData);
   };

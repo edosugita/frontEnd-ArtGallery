@@ -15,14 +15,15 @@ export default function Auction() {
     const [items, setItems] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
+    const [filteredItems, setFilteredItems] = useState(null)
 
-    const ITEMS_PER_PAGE = 16;
+    const ITEMS_PER_PAGE = 16
 
     const getPaginatedItems = (items, page) => {
-        const startIndex = (page - 1) * ITEMS_PER_PAGE;
-        const endIndex = startIndex + ITEMS_PER_PAGE;
-        return items.slice(startIndex, endIndex);
-    };
+        const startIndex = (page - 1) * ITEMS_PER_PAGE
+        const endIndex = startIndex + ITEMS_PER_PAGE
+        return items.slice(startIndex, endIndex)
+    }
 
     const fetchItems = async () => {
          try {
@@ -36,24 +37,45 @@ export default function Auction() {
         } catch (e) {
             console.log({message: e})
         }
-    };
+    }
 
     useEffect(() => {
         fetchItems()
-            .then((data) => {
-            setItems(data);
-            setCurrentPage(1);
+        .then((data) => {
+            setItems(data)
+                setCurrentPage(1)
             })
-            .catch((error) => {
-            console.error(error);
-            });
-    }, []);
+                .catch((error) => {
+                console.error(error)
+            })
+    }, [])
+    
+    const handleFilterSubmit = async (filterData) => {
+        try {
+            setIsLoading(true)
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/filter`, {
+                params: filterData,
+                headers: headers,
+                withCredentials: true,
+            })
+
+            const data = Object.values(response.data.data)
+            const filteredData = data.filter((item) => item.label === 'bid')
+            setFilteredItems(filteredData)
+            setIsLoading(false)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+    console.log(items)
+    console.log(filteredItems)
+    
     return (
         <LayoutsUser>
             {isLoading ? (
                 <div className="d-flex justify-content-center align-items-center vh-100" style={{backgroundColor: '#141414'}}>
-                    <div class="spinner-grow text-danger" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                    <div className="spinner-grow text-danger" role="status">
+                        <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>
             ) : (
@@ -61,10 +83,10 @@ export default function Auction() {
                     <div className={`row ${style.row}`}>
                         <div className="col-md-9 col-12 mb-4">
                             <div className="row">
-                                {getPaginatedItems(items, currentPage).map((item) => (
+                                {filteredItems && filteredItems.length > 0 ? filteredItems : getPaginatedItems(items, currentPage).map((item) => (
                                     <>
                                         {item.status === '0' ? null : (
-                                            <div className='col-lg-3 col-md-4 col-sm-6 col-12 mb-3' key={item.id}>
+                                            <div className='col-lg-3 col-md-4 col-sm-6 col-12 mb-3' key={item.uuid_art}>
                                                 <Link className="text-decoration-none text-light" href={`/bid/detail/${item.slug}`}>
                                                     <div className={styles.card}>
                                                         <div style={{height: '200px', width: '100%', overflow: "hidden"}}>
@@ -93,13 +115,13 @@ export default function Auction() {
                         </div>
 
                         <div className="col-md-3 col-12 mb-4">
-                            <Filters />
+                            <Filters onSubmit={handleFilterSubmit} />
                         </div>
 
                         <nav aria-label="Page navigation example">
                             <ul className="pagination pagination-sm justify-content-center">
                                 <li className="page-item">
-                                    <a
+                                    <Link
                                     className="page-link"
                                     href="#"
                                     aria-label="Previous"
@@ -107,8 +129,8 @@ export default function Auction() {
                                         setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
                                     }
                                     >
-                                    <span aria-hidden="true">&laquo;</span>
-                                    </a>
+                                    <span aria-hidden="true">&laquo</span>
+                                    </Link>
                                 </li>
                                 {items.length > 0 &&
                                     Array.from(
@@ -120,18 +142,18 @@ export default function Auction() {
                                         }`}
                                         key={i}
                                         >
-                                        <a
+                                        <Link
                                             className="page-link"
                                             href="#"
                                             onClick={() => setCurrentPage(i + 1)}
                                         >
                                             {i + 1}
-                                        </a>
+                                        </Link>
                                         </li>
                                     )
                                 )}
                                 <li className="page-item">
-                                    <a
+                                    <Link
                                     className="page-link"
                                     href="#"
                                     aria-label="Next"
@@ -144,8 +166,8 @@ export default function Auction() {
                                     }
                                     disabled={getPaginatedItems(items, currentPage + 1).length === 0}
                                     >
-                                    <span aria-hidden="true">&raquo;</span>
-                                    </a>
+                                    <span aria-hidden="true">&raquo</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </nav>
