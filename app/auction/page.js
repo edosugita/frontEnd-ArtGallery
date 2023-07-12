@@ -83,7 +83,10 @@ export default function Auction() {
                     <div className={`row ${style.row}`}>
                         <div className="col-md-9 col-12 mb-4">
                             <div className="row">
-                                {filteredItems && filteredItems.length > 0 ? filteredItems : getPaginatedItems(items, currentPage).map((item) => (
+                                {(filteredItems && filteredItems.length > 0
+                                        ? filteredItems
+                                        : getPaginatedItems(items, currentPage)
+                                    ).map((item) => (
                                     <>
                                         {item.status === '0' ? null : (
                                             <div className='col-lg-3 col-md-4 col-sm-6 col-12 mb-3' key={item.uuid_art}>
