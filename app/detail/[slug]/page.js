@@ -135,19 +135,19 @@ export default function Detail({ params }) {
 
             if (response.status === 200) {
                 Swal.fire({
-                title: 'Success',
-                text: 'Success payment',
-                icon: 'success',
-                timer: 1000,
-                background: '#141414',
-                color: '#FFFFFF',
-                timerProgressBar: true,
-                showConfirmButton: false,
-                progressStepsColor: '#E30813',
-                willClose(popup) {
-                    router.push('/user/collections')
-                }
-            })
+                    title: 'Success',
+                    text: 'Success payment',
+                    icon: 'success',
+                    timer: 1000,
+                    background: '#141414',
+                    color: '#FFFFFF',
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    progressStepsColor: '#E30813',
+                    willClose(popup) {
+                        router.push('/user/collections')
+                    }
+                })
             }
         }
     }

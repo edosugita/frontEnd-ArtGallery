@@ -6,6 +6,7 @@ import axios from "axios";
 import headers from "@/config/headers";
 import Token from "@/config/userToken";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export default function SectionOne() {
     const [data, setData] = useState([])
@@ -53,15 +54,15 @@ export default function SectionOne() {
         snap.pay(response.data.data.tokenPayment, {
             onSuccess: function (result) {
                 alert('Payment success!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onPending: function (result) {
                 alert('Waiting for payment!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onError: function (result) {
                 alert('Payment failed!')
-                postData(result)
+                postData(result, uuid_art)
             },
             onClose: function () {
                 alert('You closed the popup without finishing the payment')
@@ -69,7 +70,7 @@ export default function SectionOne() {
         })
     }
 
-    const postData = async(payment) => {
+    const postData = async(payment, dataUuid) => {
         console.log(payment)
         if (payment) {
             const url = process.env.NEXT_PUBLIC_API_URL
@@ -98,6 +99,23 @@ export default function SectionOne() {
             })
 
             console.log(response)
+            
+            if (response.status === 200) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Success payment',
+                    icon: 'success',
+                    timer: 1000,
+                    background: '#141414',
+                    color: '#FFFFFF',
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    progressStepsColor: '#E30813',
+                    willClose(popup) {
+                        router.push('/user/collections')
+                    }
+                })
+            }
         }
     }
 
