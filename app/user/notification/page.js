@@ -15,7 +15,7 @@ export default function Notification() {
     const [session, setSession] = useState(null)
     const [deleteItemData, setDeleteItemData] = useState(null)
     const [isDeleting, setIsDeleting] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
     const [user, setUser] = useState([])
     const userToken = Cookies.get('token')
