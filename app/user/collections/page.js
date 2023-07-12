@@ -8,9 +8,10 @@ import Cookies from 'js-cookie'
 import Token from '@/config/userToken'
 import axios from 'axios'
 import headers from '@/config/headers'
+import Link from 'next/link'
 
 export default function CollectionsDetail() {
-    const [user, setUser] = useState([])    
+    const [user, setUser] = useState([])
     const [data, setData] = useState([])    
     const [isLoading, setIsLoading] = useState(true)    
     const userToken = Cookies.get('token')
@@ -62,7 +63,7 @@ export default function CollectionsDetail() {
                                 
                                 {data && data.map((item) => (
                                     <div className='col-md-4 col-sm-6 col-12 mb-3 h-100' key={item.uuid_art}>
-                                        <div className="text-decoration-none text-light">
+                                        <Link className="text-decoration-none text-light" href={`/user/collections/detail/${item.uuid_art}`}>
                                             <div className={style.card}>
                                                 <div style={{height: '300px', width: '100%', overflow: "hidden"}}>
                                                     <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.art.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
@@ -77,7 +78,7 @@ export default function CollectionsDetail() {
                                                     <p><span>By</span> {item.art.artist}</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     </div>
                                 ))}
                             </div>
