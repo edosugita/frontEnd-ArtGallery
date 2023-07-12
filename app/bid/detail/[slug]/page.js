@@ -12,6 +12,7 @@ import LayoutsUser from '@/components/Layouts/User/Layouts'
 import Token from '@/config/userToken'
 import PlaceBid from '@/components/users/PlaceBid'
 import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
 
 export default function BidDetail({params}) {
     const [data, setData] = useState(null)
@@ -19,11 +20,9 @@ export default function BidDetail({params}) {
     const [isLoading, setIsLoading] = useState(true)
     const [dataBid, setDataBid] = useState([])
     const [timeString, setTimeString] = useState('')
-    const [date, setDate] = useState(null)
-    const [clock, setClock] = useState(null)
     const [isAuctionEnd, setIsAuctionEnd] = useState(false)
 
-    const router = useRouter
+    const router = useRouter()
 
     const userToken = Cookies.get('token')
 
@@ -52,7 +51,7 @@ export default function BidDetail({params}) {
                     headers: headers,
                     withCredentials: true
                 })
-                const responseData = response.data
+                const responseData = response.data.highest_price
                 setDataBid(responseData)
             } catch (error) {
                 console.log(error)
@@ -94,6 +93,87 @@ export default function BidDetail({params}) {
         }
     }, [data])
 
+    const handlePay = async(data) => {
+        const url = process.env.NEXT_PUBLIC_API_URL
+        const uuid = user.uuid
+        const uuid_art = [data]
+        const response = await axios.post(`${url}/payment/create`, {
+            uuid,
+            uuid_art
+        }, {
+            headers: headers,
+            withCredentials: true
+        })
+
+        console.log(response.data.data)
+
+        snap.pay(response.data.data.tokenPayment, {
+            onSuccess: function (result) {
+                alert('Payment success!')
+                postData(result, uuid_art)
+            },
+            onPending: function (result) {
+                alert('Waiting for payment!')
+                postData(result, uuid_art)
+            },
+            onError: function (result) {
+                alert('Payment failed!')
+                postData(result, uuid_art)
+            },
+            onClose: function () {
+                alert('You closed the popup without finishing the payment')
+            }
+        })
+    }
+
+    const postData = async(payment, dataUuid) => {
+        if (payment) {
+            const url = process.env.NEXT_PUBLIC_API_URL
+            const uuid = user.uuid
+            const uuid_art = [dataUuid]
+
+            const order_id = payment.order_id
+            const gross_amount = payment.gross_amount
+            const payment_type = payment.payment_type
+            const bank = payment.va_numbers[0].bank
+            const va_number = payment.va_numbers[0].va_number
+            const status_code = payment.status_code
+
+            const response = await axios.post(`${url}/payment/add`, {
+                uuid,
+                uuid_art,
+                order_id,
+                gross_amount,
+                payment_type,
+                bank,
+                va_number,
+                status_code,
+            }, {
+                headers: headers,
+                withCredentials: true
+            })
+
+            console.log(response)
+
+            if (response.status === 200) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Success payment',
+                    icon: 'success',
+                    timer: 1000,
+                    background: '#141414',
+                    color: '#FFFFFF',
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    progressStepsColor: '#E30813',
+                    willClose(popup) {
+                        router.push('/user/collections')
+                    }
+                })
+            }
+        }
+    }
+
     return (
         <>
             {isLoading ? (
@@ -106,7 +186,7 @@ export default function BidDetail({params}) {
                 <>
                     {data.status === '0' ? (
                         <>
-                            {router.push('/gallery')}
+                            {router.push('/')}
                         </>
                     ) : (
                         <LayoutsUser>
@@ -142,8 +222,8 @@ export default function BidDetail({params}) {
                                                                 <div className="col-12">
                                                                     <div className={style.box}>
                                                                         <p>Winner &#128081;</p>
-                                                                        {dataBid.highest_price !== null ? (
-                                                                            <h5>&#128081; {dataBid.highest_price} &#128081;</h5>
+                                                                        {dataBid.price_bid ? (
+                                                                            <h5 className='text-uppercase'>&#128081; {dataBid.user.name} &#128081;</h5>
                                                                         ) : (
                                                                             <h5>No Buyer</h5>
                                                                         )}
@@ -167,8 +247,8 @@ export default function BidDetail({params}) {
                                                                 <div className="col-md-6 col-sm-6 col-12 mb-3">
                                                                     <div className={style.box}>
                                                                         <p>Best Bid</p>
-                                                                        {!dataBid ? (
-                                                                            <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dataBid[0].max_bid_price)}</h5>
+                                                                        {dataBid ? (
+                                                                            <h5>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(dataBid.price_bid)}</h5>
                                                                         ) : (
                                                                             <h5>Rp 0,00</h5>
                                                                         )}
@@ -186,18 +266,27 @@ export default function BidDetail({params}) {
                                                     </div>
                                                     {isAuctionEnd ? (
                                                         <>
+                                                            {user?.uuid === dataBid.uuid ? (
+                                                                <div className={style.buy_button}>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-12">
+                                                                            <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" onClick={() => handlePay(data.uuid_art)} value={'Pay Now'} />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            ) : null}
                                                         </>
                                                     ) : (
                                                         <>
                                                             {user && user?.status === 1 ? (
-                                                            <div className={style.buy_button}>
-                                                                <div className="row mt-3">
-                                                                    <div className="col-12">
-                                                                        <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} data-bs-toggle="modal" data-bs-target="#placeBid" />
+                                                                <div className={style.buy_button}>
+                                                                    <div className="row mt-3">
+                                                                        <div className="col-12">
+                                                                            <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} data-bs-toggle="modal" data-bs-target="#placeBid" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            ) : <></>}
+                                                            ) : null}
                                                         </>
                                                     )}
                                                 </div>
@@ -243,7 +332,7 @@ export default function BidDetail({params}) {
                                         </div>
                                     </div>
                                 </section>
-                                <PlaceBid />
+                                <PlaceBid dataArt={data} uuidUser={user?.uuid} />
                             </div>
                         </LayoutsUser>
                     )}

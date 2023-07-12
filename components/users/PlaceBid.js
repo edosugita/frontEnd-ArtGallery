@@ -2,74 +2,55 @@ import style from '@/styles/Modal.module.css'
 import {useEffect, useState} from "react";
 import Swal from "sweetalert2";
 import {usePathname, useRouter} from "next/navigation";
+import axios from 'axios';
+import headers from '@/config/headers';
 
-export default function PlaceBid() {
-    // const [price, setPrice] = useState('')
-    // const router = useRouter()
-    // const [data, setData] = useState(null)
-    // const slug = usePathname()
-    // const [errorMessage, setErrorMessage] = useState('')
+export default function PlaceBid({ dataArt, uuidUser }) {
+    const [price_bid, setPrice] = useState('')
+    const router = useRouter()
+    const [errorMessage, setErrorMessage] = useState('')
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         try {
-    //             const response = await fetch(`http://localhost:3000/api/data/product/slug?slug=${slug}`)
-    //             const data = await response.json()
-    //             setData(data[0])
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     fetchData()
-    // }, [slug, data])
+    const handleSubmit = async (event) => {
+        event.preventDefault()
 
-    // const uuidArts = data?.uuid_art
-    // const uuidUser = session?.user?.user.uuid_user
+        try {
+            if (price_bid === '') {
+                setErrorMessage('Bid price not valid')
+            } else {
+                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/product/bid/add/${uuidUser}/${dataArt.uuid_art}`, {
+                    price_bid
+                }, {
+                    headers: headers,
+                    withCredentials: true
+                })
 
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault()
-
-    //     try {
-    //         if (price === '') {
-    //             setErrorMessage('Bid price not valid')
-    //         } else {
-    //             const response = await fetch(`http://localhost:3000/api/data/bid/add/${uuidArts}?uuidUser=${uuidUser}`, {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-type': 'application/json'
-    //                 },
-    //                 body: JSON.stringify({
-    //                     price
-    //                 })
-    //             })
-
-    //             if (response.error) {
-    //                 setMessage('Invalid Data')
-    //             } else {
-    //                 await Swal.fire({
-    //                     title: 'Success',
-    //                     text: 'Bid price successful!',
-    //                     icon: "success",
-    //                     timer: 1000,
-    //                     background: '#141414',
-    //                     color: '#FFFFFF',
-    //                     timerProgressBar: true,
-    //                     showConfirmButton: false,
-    //                     progressStepsColor: '#E30813',
-    //                     willClose(popup) {
-    //                         router.reload()
-    //                     },
-    //                 })
-    //             }
-    //         }
-    //     } catch (e) {
-    //         setErrorMessage('Something went wrong')
-    //     }
-    // }
+                if (response.error) {
+                    setErrorMessage('Invalid Data')
+                } else {
+                    await Swal.fire({
+                        title: 'Success',
+                        text: 'Bid price successful!',
+                        icon: "success",
+                        timer: 1000,
+                        background: '#141414',
+                        color: '#FFFFFF',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        progressStepsColor: '#E30813',
+                        willClose(popup) {
+                            router.refresh()
+                        },
+                    })
+                }
+            }
+        } catch (e) {
+            setErrorMessage('Something went wrong')
+        }
+    }
 
     return (
         <>
-            {/* <div className="modal fade" id="placeBid" tabIndex="-1" aria-labelledby="placeBidLabel" aria-hidden="true">
+            <div className="modal fade" id="placeBid" tabIndex="-1" aria-labelledby="placeBidLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className={style.modal_content}>
                         <div className={style.modal_header}>
@@ -82,7 +63,7 @@ export default function PlaceBid() {
                                     <div className="alert alert-danger text-center" role="alert">{errorMessage}</div>
                                 </>}
                                 <label htmlFor="bid" className="form-label">Place your bid more than the latest best bid!</label>
-                                <input type="text" className={style.form_control} value={price} onChange={(event) => setPrice(event.target.value)} placeholder="Place your bid here ..."  />
+                                <input type="text" className={style.form_control} value={price_bid} onChange={(event) => setPrice(event.target.value)} placeholder="Place your bid here ..."  />
                             </div>
                             <div className={style.modal_footer}>
                                 <button type="submit" className="btn btn-danger w-100">Place Bid</button>
@@ -90,7 +71,7 @@ export default function PlaceBid() {
                         </form>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </>
     )
 }
