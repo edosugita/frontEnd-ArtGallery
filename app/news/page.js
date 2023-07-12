@@ -9,7 +9,7 @@ import axios from "axios"
 import headers from "@/config/headers"
 
 export default function News() {
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [data, setData] = useState([])
     const [dataOne, setDataOne] = useState([])
     const [dataAll, setDataAll] = useState([])

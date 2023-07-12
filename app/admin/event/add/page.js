@@ -3,51 +3,44 @@
 import LayoutsAdmin from '@/components/Layouts/Admin/Layouts'
 import headers from '@/config/headers'
 import Token from '@/config/userToken'
-import { DatePicker, TimePicker } from 'antd'
+import { DatePicker } from 'antd'
 import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-export default function AddProductAuction() {
+export default function AddProduct() {
     const [user, setUser] = useState([])
-    const [artname, setArtname] = useState('')
-    const [artist, setArtist] = useState('')
-    const [description, setDescription] = useState('')
+    const [title, setArtname] = useState('')
+    const [content, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [dimension, setDimension] = useState('')
-    const [bid_price, setPrice] = useState('')
-    const [kategori, setCategory] = useState('')
-    const [start_bid, setStartDate] = useState('')
-    const [end_bid, setEndDate] = useState('')
+    const [start, setStart] = useState('')
+    const [end, setEnd] = useState('')
     const [selectedImage, setSelectedImage] = useState(null)
-
-    const handleStartDateChange = (date) => {
-        const formattedDate = date.format("YYYY-MM-DD HH:mm:ss")
-        setStartDate(formattedDate);
-    }
-
-    const handleEndDateChange = (date) => {
-        const formattedDate = date.format("YYYY-MM-DD HH:mm:ss")
-        setEndDate(formattedDate);
-    }
-
 
     const router = useRouter()
 
     const [isErrorArtname, setIsErrorArtname] = useState('')
-    const [isErrorArtist, setIsErrorArtist] = useState('')
     const [isErrorDesc, setIsErrorDesc] = useState('')
     const [isErrorImage, setIsErrorImage] = useState('')
-    const [isErrorDimension, setIsErrorDimension] = useState('')
-    const [isErrorPrice, setIsErrorPrice] = useState('')
-    const [isErrorCategory, setIsErrorCategory] = useState('')
+    const [isErrorStart, setIsErrorStart] = useState('')
+    const [isErrorEnd, setIsErrorEnd] = useState('')
     const [isError, setIsError] = useState('')
 
     useEffect(() => {
         setUser(Token())
     }, [])
+
+    const handleStartDateChange = (date) => {
+        const formattedDate = date.format("YYYY-MM-DD")
+        setStart(formattedDate);
+    }
+
+    const handleEndDateChange = (date) => {
+        const formattedDate = date.format("YYYY-MM-DD")
+        setEnd(formattedDate);
+    }
 
     const handleImageSelect = (event) => {
         const file = event.target.files[0]
@@ -55,23 +48,19 @@ export default function AddProductAuction() {
         setImage(file)
     }
 
+    console.log(image)
+
     const handleAdd = async (event) => {
         event.preventDefault()
         const url = process.env.NEXT_PUBLIC_API_URL
-        const uuid = user.uuid
         
         try {
-            const response = await axios.post(`${url}/product/auction/create`,{
-                uuid,
-                artname,
-                artist,
-                description,
+            const response = await axios.post(`${url}/event/create`,{
+                title,
+                content,
                 image,
-                dimension,
-                start_bid,
-                end_bid,
-                bid_price,
-                kategori
+                start,
+                end,
             }, {
                 headers: {
                     'authorization': process.env.NEXT_PUBLIC_API_KEY,
@@ -86,25 +75,23 @@ export default function AddProductAuction() {
 
             if (responseData.status == 201) {
                 Swal.fire({
-                    title: 'Success Add Product',
+                    title: 'Success Add Event',
                     text: responseData.message,
                     icon: 'success',
                     timer: 2000,
                     timerProgressBar: true,
                     willClose: () => {
-                        router.push('/admin/product/auction')
+                        router.push('/admin/event')
                     }
                 })
             }
             
         } catch (error) {
-            setIsErrorArtname(error.response?.data?.errors?.artname || null);
-            setIsErrorArtist(error.response?.data?.errors?.artist || null)
-            setIsErrorDesc(error.response?.data?.errors?.description || null)
+            setIsErrorArtname(error.response?.data?.errors?.title || null)
+            setIsErrorDesc(error.response?.data?.errors?.content || null)
             setIsErrorImage(error.response?.data?.errors?.image || null)
-            setIsErrorDimension(error.response?.data?.errors?.dimension || null)
-            setIsErrorPrice(error.response?.data?.errors?.bid_price || null)
-            setIsErrorCategory(error.response?.data?.errors?.kategori || null)
+            setIsErrorStart(error.response?.data?.errors?.start || null)
+            setIsErrorEnd(error.response?.data?.errors?.end || null)
             setIsError(error.response?.data?.message || null)
 
             console.error(error)
@@ -116,7 +103,7 @@ export default function AddProductAuction() {
             <div className="card">
                 <div className="card-body">
                     <div className="d-flex justify-content-between align-items-center">
-                        <h5>Add Product For Sale</h5>
+                        <h5>Add Event</h5>
                     </div>
                     <hr />
                     <div className="mt-10">
@@ -131,7 +118,7 @@ export default function AddProductAuction() {
                                 </div>
                                 <div className="col-md-12 col-sm-12">
                                     <div className="form-group">
-                                        <label className="font-weight-semibold">Art Name:</label>
+                                        <label className="font-weight-semibold">Title:</label>
                                         <input type="text" className={`form-control ${isErrorArtname === '' ? '' : isErrorArtname !== null ? 'is-invalid' : 'is-valid'}`} onChange={(e) => setArtname(e.target.value)} placeholder="The Starry Night" />
                                         {isErrorArtname !== null && (
                                         <div className="invalid-feedback">
@@ -140,49 +127,11 @@ export default function AddProductAuction() {
                                     )}
                                     </div>
                                 </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <div className="form-group">
-                                        <label className="font-weight-semibold">Artist:</label>
-                                        <input type="text" className={`form-control ${isErrorArtist === '' ? '' : isErrorArtist !== null ? 'is-invalid' : 'is-valid'}`} onChange={(e) => setArtist(e.target.value)} placeholder="Vincent van Gogh" />
-                                        {isErrorArtist !== null && (
-                                        <div className="invalid-feedback">
-                                            {isErrorArtist}
-                                        </div>
-                                    )}
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <div className="form-group">
-                                        <label className="font-weight-semibold">Dimension:</label>
-                                        <input type="text" className={`form-control ${isErrorDimension === '' ? '' : isErrorDimension !== null ? 'is-invalid' : 'is-valid'}`} onChange={(e) => setDimension(e.target.value)} placeholder="74 x 92 cm" />
-                                        {isErrorDimension !== null && (
-                                        <div className="invalid-feedback">
-                                            {isErrorDimension}
-                                        </div>
-                                    )}
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <div className="form-group">
-                                        <label className="font-weight-semibold">Price:</label>
-                                        <input type="text" className={`form-control ${isErrorPrice === '' ? '' : isErrorPrice !== null ? 'is-invalid' : 'is-valid'}`} onChange={(e) => setPrice(e.target.value)} placeholder="10000000" />
-                                        {isErrorPrice !== null && (
-                                            <div className="invalid-feedback">
-                                                {isErrorPrice}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-sm-12">
-                                    <label className="font-weight-semibold">Category:</label>
-                                    <input type="text" className={`form-control ${isErrorCategory === '' ? '' : isErrorCategory !== null ? 'is-invalid' : 'is-valid'}`} onChange={(e) => setCategory(e.target.value)} placeholder="category1, category2, categosy3 (max 3)" />
-                                </div>
                                 <div className="col-md-12 col-sm-12">   
                                     <div className="form-group">
                                         <label>Date Auction</label>
                                         <div className="d-flex align-items-center">
                                             <DatePicker 
-                                                showTime
                                                 onChange={handleStartDateChange}
                                                 className={`form-control`}
                                             />
@@ -190,7 +139,6 @@ export default function AddProductAuction() {
                                             <span className="p-h-10">to</span>
                                             
                                             <DatePicker 
-                                                showTime
                                                 onChange={handleEndDateChange}
                                                 className={`form-control`}
                                             />
@@ -204,12 +152,11 @@ export default function AddProductAuction() {
                                             <input type="file" className={`custom-file-input ${isErrorImage === '' ? '' : isErrorImage !== null ? 'is-invalid' : 'is-valid'}`} id="customFile" onChange={handleImageSelect} />
                                             <label className="custom-file-label" htmlFor="customFile">Choose file</label>
                                         </div>
-
                                         {isErrorImage !== null && (
-                                            <div className="invalid-feedback">
-                                                {isErrorImage}
-                                            </div>
-                                        )}
+                                        <div className="invalid-feedback">
+                                            {isErrorImage}
+                                        </div>
+                                    )}
                                     </div>
                                 </div>
                                 {selectedImage && (

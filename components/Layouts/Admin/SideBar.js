@@ -91,6 +91,22 @@ export default function SideBar() {
                                 </li>
                             </ul>
                         </li>
+                        <li className={`nav-item dropdown ${isActiveDropDown('admin/event')} ${isActiveDropDown('event/add')} `}>
+                            <Link className="dropdown-toggle" href="#">
+                                <span className="icon-holder">
+									<i className="anticon anticon-hdd"></i>
+								</span>
+                                <span className="title">Event</span>
+                                <span className="arrow">
+									<i className="arrow-icon"></i>
+								</span>
+                            </Link>
+                            <ul className="dropdown-menu">
+                                <li className={isActiveLink('admin/event')}>
+                                    <Link href="/admin/event">Create</Link>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>
