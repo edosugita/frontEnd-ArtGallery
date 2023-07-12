@@ -61,7 +61,7 @@ export default function CollectionsDetail() {
                                     </div>
                                 </div>
                                 
-                                {data && data.map((item) => (
+                                {data ? data.map((item) => (
                                     <div className='col-md-4 col-sm-6 col-12 mb-3 h-100' key={item.uuid_art}>
                                         <Link className="text-decoration-none text-light" href={`/user/collections/detail/${item.uuid_art}`}>
                                             <div className={style.card}>
@@ -80,7 +80,13 @@ export default function CollectionsDetail() {
                                             </div>
                                         </Link>
                                     </div>
-                                ))}
+                                )) : (
+                                    <>
+                                        <div className="d-flex justify-content-center align-items-ceter text-ceter">
+                                            <h5>No Collections</h5>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </section>
                     </div>
