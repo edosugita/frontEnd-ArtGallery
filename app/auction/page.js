@@ -16,6 +16,7 @@ export default function Auction() {
     const [currentPage, setCurrentPage] = useState(1)
     const [isLoading, setIsLoading] = useState(true)
     const [filteredItems, setFilteredItems] = useState(null)
+    const sortBy = 'bid'
 
     const ITEMS_PER_PAGE = 16
 
@@ -67,8 +68,6 @@ export default function Auction() {
             console.error(error)
         }
     }
-    console.log(items)
-    console.log(filteredItems)
     
     return (
         <LayoutsUser>
@@ -118,7 +117,7 @@ export default function Auction() {
                         </div>
 
                         <div className="col-md-3 col-12 mb-4">
-                            <Filters onSubmit={handleFilterSubmit} />
+                            <Filters onSubmit={handleFilterSubmit} sort={sortBy} />
                         </div>
 
                         <nav aria-label="Page navigation example">
@@ -132,7 +131,7 @@ export default function Auction() {
                                         setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1))
                                     }
                                     >
-                                    <span aria-hidden="true">&laquo</span>
+                                    <span aria-hidden="true">&laquo;</span>
                                     </Link>
                                 </li>
                                 {items.length > 0 &&
@@ -169,7 +168,7 @@ export default function Auction() {
                                     }
                                     disabled={getPaginatedItems(items, currentPage + 1).length === 0}
                                     >
-                                    <span aria-hidden="true">&raquo</span>
+                                    <span aria-hidden="true">&raquo;</span>
                                     </Link>
                                 </li>
                             </ul>

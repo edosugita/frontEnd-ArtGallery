@@ -1,12 +1,13 @@
+'use client'
 import headers from '@/config/headers';
 import style from '@/styles/Filter.module.css';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function Filters({ onSubmit }) {
-  const [sortOrder, setSortOrder] = useState('asc');
-  const [sortType, setSortType] = useState('price');
+export default function Filters({ onSubmit, sort }) {
+  const [sortOrder, setSortOrder] = useState(null);
+  const [sortType, setSortType] = useState(null);
   const [categories, setCategories] = useState([]);
   const [labelFilters, setLabelFilters] = useState([]);
 
@@ -60,6 +61,14 @@ export default function Filters({ onSubmit }) {
 
     onSubmit(filterData);
   };
+
+  useEffect(() => {
+    if (sort === 'bid') {
+      setSortType('bid_price');
+    } else {
+      setSortType('price');
+    }
+  }, [sort]);
 
   const pathname = usePathname()
 
