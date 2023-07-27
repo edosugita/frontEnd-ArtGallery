@@ -28,7 +28,7 @@ export default function LayoutsUser({ children }) {
             <Script
                 type="text/javascript"
                 src="https://app.sandbox.midtrans.com/snap/snap.js"
-                data-client-key="SB-Mid-client-XravRxhAaythPuaC"
+                data-client-key="SB-Mid-client-5wKuAXfzjv0mrY31"
             />
         </html>
     )
