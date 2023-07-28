@@ -16,7 +16,7 @@ export default function LayoutsUser({ children }) {
     
     return (
         <html lang="en">
-            <body className='bg-background text-white' style={{backgroundColor: '#141414'}}>
+            <body className='bg-background text-dark' style={{backgroundColor: '#ffffff'}}>
                 <header>
                     <Navbars />
                 </header>
@@ -28,7 +28,7 @@ export default function LayoutsUser({ children }) {
             <Script
                 type="text/javascript"
                 src="https://app.sandbox.midtrans.com/snap/snap.js"
-                data-client-key="SB-Mid-client-5wKuAXfzjv0mrY31"
+                data-client-key="SB-Mid-client-XravRxhAaythPuaC"
             />
         </html>
     )

@@ -17,19 +17,19 @@ export default function Event() {
                         <div className="row">
                             <div className="col-lg-5 col-12 mb-3">
                                 <div className="jumbotron">
-                                    <h1>Explore the Metaverse in a New Way with Our VR Gallery Art App</h1>
+                                    <h1 style={{color: '#000'}}>Explore the Metaverse in a New Way with Our VR Gallery Art App</h1>
                                     <label className='mt-4' style={{fontWeight: 400, fontSize: '14px', color: '#858585', width: '80%'}}>
                                         Discover a new world of art in the Metaverse with our VR Gallery app. Download now and experience breathtaking masterpieces in a whole new way.
                                     </label>
                                     <div className="d-flex align-items-center justify-content-start gap-3">
-                                        <Link href={'#'}>
+                                        <Link href={'https://drive.google.com/file/d/1qL9M5_4FtYdNJjeQl2ASzdetoqegYj9Z/view?usp=sharing'}>
                                             <Image src={'/images/svg/play_store.svg'} width={150} height={150} alt='Google Play Store' />
                                         </Link>
-                                        <Link href={'#'}>
-                                            <Image src={'/images/svg/app_store.svg'} width={150} height={150} alt='Google Play Store' />
+                                        <Link href={'https://drive.google.com/file/d/1qL9M5_4FtYdNJjeQl2ASzdetoqegYj9Z/view?usp=sharing'}>
+                                            <Image src={'/images/svg/app_store.svg'} width={150} height={150} alt='Apps Store' />
                                         </Link>
-                                        <Link href={'#'}>
-                                            <Image src={'/images/svg/microsoft_store.svg'} width={120} height={150} alt='Google Play Store' className='rounded' />
+                                        <Link href={'https://drive.google.com/file/d/1qL9M5_4FtYdNJjeQl2ASzdetoqegYj9Z/view?usp=sharing'}>
+                                            <Image src={'/images/svg/microsoft_store.svg'} width={120} height={150} alt='Microsoft Store' className='rounded' />
                                         </Link>
                                     </div>
                                 </div>
@@ -55,13 +55,13 @@ export default function Event() {
                                     </div>
 
                                     <div className="col-md-7 col-12 d-flex flex-column justify-content-evenly">
-                                        <h3 style={{letterSpacing: '0.04em', width: '50%'}}>
+                                        <h3 style={{letterSpacing: '0.04em', width: '50%', color: '#000'}}>
                                             Enter a New Dimension of Art Explore Our Metaverse Gallery
                                         </h3>
                                         <p style={{color: '#858585'}}>Click now to enter a new dimension of art.</p>
-                                        <div className="">
+                                        {/* <div className="">
                                             <button className={`btn btn-danger`} style={{width: 'auto'}}>See Metaverse</button>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>

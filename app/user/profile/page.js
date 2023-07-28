@@ -59,14 +59,14 @@ export default function Profile() {
                 <LayoutsUser>
                     <div className="container p-5" key={data?.uuid}>
                         <div className="row">
-                            <div className="col-md-3 col-12">
+                            <div className="col-md-3 col-12" style={{ color: '#000' }}>
                                 <h2>My Account</h2>
-                                <div className="mt-4 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                    <Link className="nav-link text-light" id="name-tab" data-toggle="pill" href="#" role="tab" aria-controls="name" aria-selected="true">Name</Link>
-                                    <Link className="nav-link text-light" id="username-tab" data-toggle="pill" href="#" role="tab" aria-controls="username" aria-selected="false">Username</Link>
-                                    <Link className="nav-link text-light" id="email-tab" data-toggle="pill" href="#" role="tab" aria-controls="email" aria-selected="false">Email</Link>
-                                    <Link className="nav-link text-light" id="password-tab" data-toggle="pill" href="#" role="tab" aria-controls="password" aria-selected="false">Password</Link>
-                                    <Link className="nav-link text-light" id="avatar-tab" data-toggle="pill" href="#" role="tab" aria-controls="avatar" aria-selected="false">Avatar</Link>
+                                <div className="mt-4 nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical" >
+                                    <Link className="nav-link text-dark" id="name-tab" data-toggle="pill" href="#" role="tab" aria-controls="name" aria-selected="true">Name</Link>
+                                    <Link className="nav-link text-dark" id="username-tab" data-toggle="pill" href="#" role="tab" aria-controls="username" aria-selected="false">Username</Link>
+                                    <Link className="nav-link text-dark" id="email-tab" data-toggle="pill" href="#" role="tab" aria-controls="email" aria-selected="false">Email</Link>
+                                    <Link className="nav-link text-dark" id="password-tab" data-toggle="pill" href="#" role="tab" aria-controls="password" aria-selected="false">Password</Link>
+                                    <Link className="nav-link text-dark" id="avatar-tab" data-toggle="pill" href="#" role="tab" aria-controls="avatar" aria-selected="false">Avatar</Link>
                                 </div>
                             </div>
                             <div className="col-md-9 col-12">

@@ -98,8 +98,8 @@ export default function Gallery() {
                                                                 />
                                                             </div>
                                                             <div className={styles.card_body}>
-                                                                <h5 style={{ height: '5rem' }}>{item.artname}</h5>
-                                                                <div className="mb-3 mt-2" style={{ height: '4rem' }}>
+                                                                <h5 style={{ height: '3rem' }}>{item.artname}</h5>
+                                                                <div className="mb-1 mt-2" style={{ height: '2rem' }}>
                                                                     {item.kategori.split(',').map((kategori) => (
                                                                         <span
                                                                             key={kategori}

@@ -2,6 +2,7 @@ import style from '@/styles/Footer.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 
+
 export default function Footer() {
   return (
     <>
@@ -11,11 +12,17 @@ export default function Footer() {
                     <div className='col-md-6 col-12'>
                         <div className="d-flex justify-content-start">
                             <div className="row">
-                                <div className="col-12">
-                                    <h1 className={style.title}>23 Art Galery</h1>
-                                </div>
-                                <div className="col-12">
-                                    <p className={style.mail}>23artgalery@email.com</p>
+                                <Link className="logo" href="/">
+                                    <Image
+                                        src={'/assets/images/user/logo.png'}
+                                        width={512}
+                                        height={512}
+                                        alt='Logo'
+                                        style={{width: '11rem', height: 'auto'}}
+                                    />
+                                </Link>
+                                <div className="col-12 mt-4">
+                                    <p className={style.mail}>artgalery@email.com</p>
                                 </div>
                             </div>
                         </div>

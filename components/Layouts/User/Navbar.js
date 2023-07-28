@@ -104,7 +104,7 @@ export default function Navbar() {
                             )}
                             
                             <li className="nav-item dropdown d-flex align-items-center flex-column">
-                                <Link href={'/'} className={`${style.nav_link} dropdown-toggle`} role="button" data-bs-toggle="dropdown">
+                                <Link href={'/'} className={`${style.nav_link}`} role="button" data-bs-toggle="dropdown">
                                     <div className={style.circle}>
                                         {user !== null && user.status == 1 ? (
                                             <>

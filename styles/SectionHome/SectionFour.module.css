@@ -1,11 +1,13 @@
 .section_four {
     margin-top: 50px;
+
 }
 
 .h4_title {
     font-style: normal;
     font-weight: 600;
     font-size: 18px !important;
+    color: #000;
 }
 
 .section_four_btn {
@@ -23,8 +25,8 @@
 }
 
 .card {
-    background: #1A1A1A;
-    border: 1px solid #2E2E2E;
+    background: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -43,13 +45,14 @@
     font-weight: 600;
     font-size: 14px;
     margin-bottom: 5px;
+    color: #000000;
 }
 
 .card_body>p {
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
-    color: #FFFFFF;
+    color: #000000;
     text-transform: capitalize;
 }
 
@@ -57,7 +60,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 14px !important;
-    color: #FFFFFF;
+    color: #000000;
     text-transform: uppercase;
 }
 

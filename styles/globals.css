@@ -13,9 +13,13 @@
   --link-active: #E30813;
 }
 
+/* .background{
+  background-image: image();
+} */
+
 body {
   font-family: var(--font-family);
-  background-color: #141414;
+  background-color: #0c0c0c;
   color: #FFFFFF;
 }
 

@@ -6,6 +6,7 @@
     font-style: normal;
     font-weight: 600;
     font-size: 18px !important;
+    color: #000;
 }
 
 .section_three_btn {
@@ -37,7 +38,7 @@
     font-weight: 600;
     font-size: 14px !important;
     line-height: 130%;
-    color: #EBEBEB;
+    color: #000;
 }
 
 .section_three_desc>span:first-child {
@@ -75,6 +76,7 @@
 .list_information {
     display: grid;
     gap: 20px;
+    color: #000;
 }
 
 .list_img {
@@ -92,7 +94,7 @@
     font-weight: 500;
     font-size: 10px !important;
     line-height: 130%;
-    color: #EBEBEB;
+    color: #000;
 }
 
 .list_date {

@@ -201,7 +201,7 @@ export default function Detail({ params }) {
                                                                     <input className={`btn btn-danger w-100 ${style.btnbuy}`} type="button" value={'Buy Now'} onClick={() => handleClick(data.uuid_art)} />
                                                                 </div>
                                                                 <div className="col-5">
-                                                                    <button className={`btn text-light w-100 ${style.btnshop}`} onClick={handleAddToCart}>
+                                                                    <button className={`btn btn-dark text-light w-100 ${style.btnshop}`} onClick={handleAddToCart}>
                                                                         <FontAwesomeIcon className='me-3' icon={faCartShopping} />
                                                                         Add to Cart
                                                                     </button>

@@ -6,6 +6,7 @@
     font-style: normal;
     font-weight: 600;
     font-size: 18px !important;
+    color: #000000;
 }
 
 .section_two_btn {
@@ -23,8 +24,8 @@
 }
 
 .card {
-    background: #1A1A1A;
-    border: 1px solid #2E2E2E;
+    background: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 4px;
     overflow: hidden;
 
@@ -42,15 +43,18 @@
 .card_body>h5 {
     font-style: normal;
     font-weight: 600;
+    font-family: 'ConcreteFont', sans-serif;
     font-size: 14px;
     margin-bottom: 5px;
+    color: #000000;
 }
 
 .card_body>p {
     font-style: normal;
     font-weight: 400;
+    font-family: 'ConcreteFont', sans-serif;
     font-size: 10px;
-    color: #FFFFFF;
+    color: #000000;
     text-transform: capitalize;
 }
 
@@ -58,7 +62,8 @@
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
-    color: #FFFFFF;
+    font-family: 'ConcreteFont', sans-serif;
+    color: #000000;
     text-transform: capitalize;
     text-decoration-line: line-through;
 }
@@ -67,23 +72,30 @@
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
+    font-family: 'ConcreteFont', sans-serif;
     color: #E30813;
     text-transform: capitalize;
 }
 
 .card_text {
     font-style: normal;
+    font-family: 'ConcreteFont', sans-serif;
     font-weight: 500;
     font-size: 14px !important;
-    color: #FFFFFF;
+    color: #000000;
     text-transform: uppercase;
 }
 
 .card_body>p>span {
     font-style: normal;
     font-weight: 400;
+    font-family: 'ConcreteFont', sans-serif;
     font-size: 10px;
     color: #858585 !important;
+}
+
+.bid{
+    color: #000000;
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -94,6 +106,7 @@
 
     .h4_title {
         font-size: 18px;
+        color: #000000;
     }
     
     .section_two_btn {
@@ -109,6 +122,7 @@
     .card_body>h5 {
         font-size: 14px;
         margin-bottom: 5px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .discount>p:last-child,
@@ -116,6 +130,7 @@
     .card_body>p>span,
     .card_body>p  {
         font-size: 10px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .card_text {
@@ -131,6 +146,7 @@
 
     .h4_title {
         font-size: 18px;
+        color: #000000;
     }
     
     .section_two_btn {
@@ -146,6 +162,7 @@
     .card_body>h5 {
         font-size: 14px;
         margin-bottom: 5px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .discount>p:last-child,
@@ -153,10 +170,12 @@
     .card_body>p>span,
     .card_body>p  {
         font-size: 10px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .card_text {
         font-size: 14px !important;
+        font-family: 'ConcreteFont', sans-serif;
     }
 }
 
@@ -183,6 +202,7 @@
     .card_body>h5 {
         font-size: 16px;
         margin-bottom: 5px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .discount>p:last-child,
@@ -190,9 +210,11 @@
     .card_body>p>span,
     .card_body>p  {
         font-size: 12px;
+        font-family: 'ConcreteFont', sans-serif;
     }
 
     .card_text {
         font-size: 16px !important;
+        font-family: 'ConcreteFont', sans-serif;
     }
 }

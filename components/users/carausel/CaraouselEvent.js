@@ -87,13 +87,13 @@ export default class CarouselNewsArt extends Component {
                     {data.map((item, index) => (
                         <div key={index}>
                             <div className='me-2 ms-2'>
-                                <div className={`d-flex align-items-center rounded p-3 gap-3`} style={{backgroundColor: '#1A1A1A', border: '1px solid #2E2E2E'}}>
+                                <div className={`d-flex align-items-center rounded p-3 gap-3`} style={{backgroundColor: '#f1f1f1', border: '1px solid rgba(255, 255, 255, 0.3'}}>
                                     <div className="rounded" style={{width: '100px', height: '100px', overflow: "hidden"}}>
                                         <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{width: 'auto', height: '200px'}} />
                                     </div>
                                     <div className="text">
-                                        <h6 style={{fontSize: '16px'}}>{item.title}</h6>
-                                        <span style={{fontSize: '12px', color: '#D1D1D1'}}>{formatDate(item.start)}</span>
+                                        <h6 style={{fontSize: '16px', color: '#000'}}>{item.title}</h6>
+                                        <span style={{fontSize: '12px', color: '#858585'}}>{formatDate(item.start)}</span>
                                     </div>
                                 </div>
                             </div>

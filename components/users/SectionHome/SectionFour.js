@@ -66,8 +66,8 @@ export default function SectionFour() {
                                                     <Image src={`${process.env.NEXT_PUBLIC_IMG_URL}/${item.image}`} alt="Image Slider" height="520" width="520" className="rounded" style={{height: '100%', width: '100%', display: "block", objectFit:"cover"}} />
                                                 </div>
                                                 <div className={style.card_body}>
-                                                    <h5 style={{height:'4rem'}}>{item.artname}</h5>
-                                                    <div className="mb-3 mt-2">
+                                                    <h5 style={{height:'2rem'}}>{item.artname}</h5>
+                                                    <div className="mb-1 mt-2">
                                                         {item.kategori.split(",").map((kategori) => (
                                                             <span key={kategori} className="badge me-2 mb-1 text-uppercase" style={{background: '#2E2E2E', color: '#EBEBEB'}}>{kategori}</span>
                                                         ))}

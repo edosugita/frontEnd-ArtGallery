@@ -11,6 +11,7 @@ import SectionThree from '@/components/users/SectionHome/SectionThree'
 import SectionFour from '@/components/users/SectionHome/SectionFour'
 import CarouselOnGoing from '@/components/users/carausel/CarouselOnGoing'
 import CarouselUpcoming from '@/components/users/carausel/CarouselUpcoming'
+import Opening from '@/public/images/png/background-opening.png'
 
 export default function Home() {
     const [isLoading, setIsLoading] = useState(false)
@@ -19,8 +20,13 @@ export default function Home() {
     }
     return (
         <LayoutsUser>
-            <div className='container p-5'>
-                <SectionOne />
+            <section className='section0'>
+                <Image className={style.jumbotron} src={Opening} alt='open'/>
+            </section>
+            
+            <div className='container pb-5 pl-5 pr-5'>
+
+                {/* <SectionOne /> */}
                 <SectionTwo />
                 <SectionThree />
                 <SectionFour />

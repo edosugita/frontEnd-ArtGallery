@@ -1,6 +1,6 @@
 .card {
-    background: #1A1A1A;
-    border: 1px solid #2E2E2E;
+    background: #f1f1f1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -18,12 +18,14 @@
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
+    color: black;
     margin-bottom: 5px;
 }
 
 .card_body>p:nth-child(2),
 .card_body>p>span {
     font-size: 10px;
+    color: #000;
 }
 
 .card_body>span,
@@ -36,7 +38,7 @@
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
-    color: #FFFFFF;
+    color: #000;
     text-transform: capitalize;
 }
 
@@ -44,7 +46,7 @@
     font-style: normal;
     font-weight: 500;
     font-size: 14px !important;
-    color: #FFFFFF;
+    color: #000;
     text-transform: uppercase;
 }
 
